@@ -44,11 +44,20 @@
 // 👍 804 👎 0
 package main
 
-func main() {
+import (
+	"fmt"
+	"strconv"
+)
 
+func main() {
+	nums := []int{1, 1, 1, 1, 1}
+	target := 3
+	fmt.Println(findTargetSumWaysTwo(nums, target))
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
+
+//DFS
 func findTargetSumWays(nums []int, target int) int {
 	var dfs func(int, int) int
 	dfs = func(sum, cnt int) (all int) {
@@ -59,7 +68,30 @@ func findTargetSumWays(nums []int, target int) int {
 				return 0
 			}
 		}
-		return all + dfs(sum+nums[cnt], cnt+1) + dfs(sum-nums[cnt], cnt+1)
+		return dfs(sum+nums[cnt], cnt+1) + dfs(sum-nums[cnt], cnt+1)
+	}
+	return dfs(0, 0)
+}
+
+//DFS记忆化搜索
+func findTargetSumWaysTwo(nums []int, target int) int {
+	value := make(map[string]int)
+	var dfs func(int, int) int
+	dfs = func(sum, cnt int) (all int) {
+		key := strconv.Itoa(sum) + "_" + strconv.Itoa(cnt)
+		if v, ok := value[key]; ok == true {
+			return v
+		}
+		if cnt == len(nums) {
+			if sum == target {
+				value[key] = sum + 1
+			} else {
+				value[key] = sum
+			}
+			return value[key]
+		}
+		value[key] = dfs(sum+nums[cnt], cnt+1) + dfs(sum-nums[cnt], cnt+1)
+		return value[key]
 	}
 	return dfs(0, 0)
 }
