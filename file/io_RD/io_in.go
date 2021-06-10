@@ -60,7 +60,7 @@ func main() {
 		}
 		fmt.Println(n, string(readList[:n]))
 	}
-	_, err = file.Seek(0, 0)
+	_, err = file.Seek(0, io.SeekStart)
 	if err != nil {
 		panic(err)
 	}
@@ -76,12 +76,11 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(n, string(readList[:n]))
-	_, err = file.Seek(0, 0)
+	_, err = file.Seek(0, io.SeekStart)
 	if err != nil {
 		panic(err)
 	}
 	//使用函数读全部数据
-	readList = make([]byte, 20)
 	readList, err = io.ReadAll(file)
 	if err != nil {
 		panic(err)

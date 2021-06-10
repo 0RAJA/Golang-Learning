@@ -50,7 +50,7 @@ func creatFile(fileName string) *os.File {
 }
 
 func myReadAll(file *os.File) []byte {
-	_, _ = file.Seek(0, 0)         //归位文件指针
+	_, _ = file.Seek(0, io.SeekStart)         //归位文件指针
 	readList := make([]byte, 1024) //循环读取内容
 	byteNum, returnList := 0, make([]byte,0)
 	for {
