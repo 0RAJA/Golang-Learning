@@ -56,7 +56,7 @@
 // listA 中节点数目为 m 
 // listB 中节点数目为 n 
 // 0 <= m, n <= 3 * 104 
-// 1 <= Node.val <= 105 
+// 1 <= myNode.val <= 105
 // 0 <= skipA <= m 
 // 0 <= skipB <= n 
 // 如果 listA 和 listB 没有交点，intersectVal 为 0 

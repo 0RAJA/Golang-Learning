@@ -61,7 +61,7 @@
 // Related Topics 树 深度优先搜索 
 // 👍 119 👎 0
 /**
- * Definition for a binary tree Node.
+ * Definition for a binary tree myNode.
  * type TreeNode struct {
  *     Val int
  *     Left *TreeNode
