@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+            HTML DOM
+                1.标签体的设置和获取: innerHTML
+                2.使用htm1元素对象的属性
+                3.控制样式
+            全选:
+                获取所有的checkbox
+                遍历checkbox,设置每一个checkbox的状态为选中:checked
+        */
+    </script>
+    <style>
+        table {
+            border: 1px solid;
+            margin: auto;
+            width: 500px;
+        }
+
+        td,
+        th {
+            text-align: center;
+            border: 1px solid;
+        }
+
+        div {
+            text-align: center;
+            margin: 50px;
+        }
+
+        .tr2 {
+            color: tomato;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <input type="text" id="id" placeholder="请输入编号">
+    <input type="text" id="name" placeholder="请输入姓名">
+    <input type="text" id="gender" placeholder="请输入性别"><br>
+    <input type="button" id="btn_add" value="添加">
+</div>
+<table id="table">
+    <caption>学生信息表</caption>
+    <tr class="tr">
+        <th><input type="checkbox" name="cbAll"></th>
+        <th>编号</th>
+        <th>姓名</th>
+        <th>性别</th>
+        <th>操作</th>
+    </tr>
+    <tr class="tr">
+        <td><input type="checkbox" name="cb"></td>
+        <td>1</td>
+        <td>令狐冲</td>
+        <td>男</td>
+        <td><a href="javascript:void(0);" onclick="delTr(this)">删除</a></td>
+    </tr>
+    <tr class="tr">
+        <td><input type="checkbox" name="cb"></td>
+        <td>2</td>
+        <td>任我行</td>
+        <td>男</td>
+        <td><a href="javascript:void(0);" onclick="delTr(this)">删除</a></td>
+    </tr>
+    <tr class="tr">
+        <td><input type="checkbox" name="cb"></td>
+        <td>3</td>
+        <td>岳不群</td>
+        <td>?</td>
+        <td><a href="javascript:void(0);" onclick="delTr(this)">删除</a></td>
+    </tr>
+</table>
+<input type="button" id="selectAll" value="全选">
+<input type="button" id="unSelectAll" value="全不选">
+<input type="button" id="selectRev" value="反选">
+<script>
+    //在页面加载完后绑定事件
+    var cbList = document.getElementsByName("cb");
+    var cbAll = document.getElementsByName("cbAll")[0];
+    cbAll.onclick = check_ALL;
+
+    function check_ALL() {
+        cbList = document.getElementsByName("cb");
+        for (var i = 0; i < cbList.length; i++) {
+            cbList[i].checked = cbAll.checked;
+        }
+    }
+
+    function checkAll() {
+        cbList = document.getElementsByName("cb");
+        for (var i = 0; i < cbList.length; i++) {
+            cbList[i].checked = true;
+        }
+        cbAll.checked = true;
+    }
+
+    function checkNo() {
+        cbList = document.getElementsByName("cb");
+        for (var i = 0; i < cbList.length; i++) {
+            cbList[i].checked = false;
+        }
+        cbAll.checked = false;
+    }
+
+    //给全选按钮绑定单击事件
+    document.getElementById("selectAll").onclick = checkAll;
+    document.getElementById("unSelectAll").onclick = checkNo;
+    document.getElementById("selectRev").onclick = function () {
+        var checkedNum = 0;
+        for (var i = 0; i < cbList.length; i++) {
+            cbList[i].checked = !cbList[i].checked;
+            if (cbList[i].checked == true) {
+                checkedNum++;
+            }
+        }
+        if (checkedNum == cbList.length) {
+            cbAll.checked = true;
+        } else {
+            cbAll.checked = false;
+        }
+    }
+    //点击选择框
+    // for (var i = 0; i < cbList; i++) {
+    //     cbList[i].onclick = function () {
+    //         cbAll.checked = checkClick(cbList[i]);
+    //     }
+    // }
+
+    // function checkClick(this) {
+    //     if (this.checked == false) {
+    //         return false;
+    //     }
+    //     var cbList2 = document.getElementsByName("cb");
+    //     var checkedNum = 0;
+    //     for (var i = 0; i < cbList2.length; i++) {
+    //         if (cbList2[i].checked == true) {
+    //             checkedNum++;
+    //         }
+    //     }
+    //     return checkedNum == cbList2.length;
+    // }
+    //使用innerHTML添加会刷新table,导致绑定失效,所以用appendChild比较好
+    document.getElementById("btn_add").onclick = function () {
+        //获取文本框内容
+        var id = document.getElementById("id").value;
+        var name = document.getElementById("name").value;
+        var gender = document.getElementById("gender").value;
+        //创建td,赋值td的标签体
+        var td_id = document.createElement("td");
+        td_id.innerHTML = id;
+        var td_name = document.createElement("td");
+        td_name.innerHTML = name;
+        var td_gender = document.createElement("td");
+        td_gender.innerHTML = gender;
+        var td_a = document.createElement("td");
+        var ele_a = document.createElement("a");
+        td_a.appendChild(ele_a);
+        ele_a.setAttribute("href", "javascript:void(0);");
+        ele_a.setAttribute("onclick", "delTr(this)");
+        ele_a.innerHTML = "删除"
+        var td_input = document.createElement("td");
+        var ele_input = document.createElement("input");
+        ele_input.setAttribute("type", "checkbox");
+        ele_input.setAttribute("name", "cb")
+        td_input.appendChild(ele_input);
+        //创建tr
+        var tr = document.createElement("tr");
+        tr.appendChild(td_input);
+        tr.appendChild(td_id);
+        tr.appendChild(td_name);
+        tr.appendChild(td_gender);
+        tr.appendChild(td_a);
+        tr.setAttribute("class", "tr");
+        var table = document.getElementById("table");
+        table.appendChild(tr);
+        tr.onmouseover = function () {
+            this.className = "tr2";
+        }
+        tr.onmouseout = function () {
+            this.className = "tr1";
+        }
+    }
+
+    //删除
+    function delTr(obj) {
+        const tr = obj.parentNode.parentNode;
+        const table = tr.parentNode;
+        table.removeChild(tr);
+    }
+
+    //鼠标移动事件
+    var trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        trs[i].onmouseover = function () {
+            this.className = "tr2";
+        }
+        trs[i].onmouseout = function () {
+            this.className = "tr1";
+        }
+    }
+</script>
+</body>
+
+</html>

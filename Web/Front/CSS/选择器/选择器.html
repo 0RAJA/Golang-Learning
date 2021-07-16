@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*类选择器: class 通过.定义*/
+        .green {
+            color: rgb(13, 231, 42);
+        }
+
+        .red {
+            color: red;
+        }
+
+        div {
+            color: rosybrown;
+        }
+
+        /*id选择器只能被调用一次 通过#定义*/
+        #pink {
+            color: pink;
+        }
+
+        /* 并集选择器: 选择器1,选择器2{} */
+        /* 子选择器: 选择器1 选择器2{} --选择选择器2*/
+        /* 父选择器: 选择器1 > 选择器2{} --选择选择器1*/
+        /* 
+            属性选择器: 选择元素名称,属性名=属性值的元素 
+            元素名称[属性名="属性值"]{}
+        */
+        input[type="text"] {
+            color: yellow;
+        }
+
+        /*
+        伪类选择器:选择一些元素具有的状态
+            *语法:元素:状态{}
+                *如: <a>
+                    状态:
+                        *link :初始化状态
+                        *visited :被访问过的状态
+                        *active :正在访问状态
+                        *hover :鼠标悬浮.
+        */
+        a:link {
+            color: brown;
+            font-size: 100px;
+        }
+
+        a:visited {
+            color: cornflowerblue;
+            font-size: 50px;
+        }
+
+        a:hover {
+            color: darkgray;
+            font-size: 75px
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 选择器分为基础选择器和复合选择器市个大类,我们这里先讲解一下基础选择器。
+    ●基础选择器是由单个选择器组成的
+    ●基础选择器又包括:标签选择器、类选择器、id选择器和通配符选择器 -->
+    <p class="red">男1</p>
+    <p class="green">男2</p>
+    <div>女1</div>
+    <div>女2</div>
+    <p id="pink">粉色</p>
+    输入框:&nbsp;<input type="text"><br>
+    <a href="#javascript">点这里</a>
+</body>
+
+</html>

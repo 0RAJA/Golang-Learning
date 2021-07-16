@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+        1.功能:控制html文档的内容
+        2.代码:获取页面标签(元素)对象 Element
+            document.getElementById("id值");
+                通过id获取元素对象
+        3.操作Element对象
+            1.设置属性值
+                先获取对象,然后查api修改内容
+            2.修改标签体内容
+                属性:innerHTML
+        */
+    </script>
+</head>
+
+<body>
+    <img id="img" src="./img/C.png" alt="骰子">
+    <h1 id="title">悔创阿里杰克马</h1>
+    <script>
+        //设置属性值
+        // var img = document.getElementById("img");
+        // alert("我要换图片了");
+        // img.src = "./img/1.png";
+        //修改标签体内容
+        var title = document.getElementById("title");
+        alert("我要换标签");
+        title.innerHTML = "不知妻美刘强东";
+    </script>
+</body>
+
+</html>

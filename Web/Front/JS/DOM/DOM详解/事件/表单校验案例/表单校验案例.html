@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: url(../../../../../HTML/13246843939556355.jpg) no-repeat center;
+        }
+
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .login_in {
+            width: 800px;
+            height: 500px;
+            border: 8px solid gray;
+            background: whitesmoke;
+            margin: auto;
+            /* 水平居中 */
+            margin-top: 15px;
+        }
+
+        .left {
+            float: left;
+            margin: 15px;
+        }
+
+        .left > p:first-child {
+            font: italic 700 20px "微软雅黑";
+        }
+
+        .left > p:last-child {
+            font: italic 600 18px 宋体;
+        }
+
+        /* .center {
+            float: left;
+            padding: 0 40px;
+        } */
+        .login_in {
+            display: flex;
+        }
+
+        .left,
+        .center,
+        .right {
+            flex: 1;
+        }
+
+        .class_left {
+            width: 100px;
+            height: 50px;
+            text-align: right;
+        }
+
+        .class_right {
+            padding: 15px;
+        }
+
+        #username,
+        #password,
+        #email,
+        #realName,
+        #phone,
+        #birthday {
+            width: 200px;
+            height: 30px;
+            border: 1px solid gray;
+            /* 设置边框圆角 */
+            border-radius: 5px;
+            padding-left: 10px;
+        }
+
+        .male {
+            font-family: "微软雅黑";
+            font-size: 18px;
+
+        }
+
+        .commit input {
+            font-family: "微软雅黑";
+            font-size: 18px;
+        }
+
+        .right p {
+            margin-left: 50px;
+        }
+
+        .right {
+            float: right;
+            font: italic 700 20px "微软雅黑";
+            margin: 15px;
+        }
+
+        .right p a {
+            color: steelblue;
+        }
+    </style>
+</head>
+
+<body>
+<div class="login_in">
+    <div class="left">
+        <p>新用户注册</p>
+        <p>USER REGISTER</p>
+    </div>
+    <div class="center">
+        <div class="table">
+            <form action="#" method="POST" id="form">
+                <table>
+                    <tr>
+                        <td class="class_left"><label for="username">用户名</label></td>
+                        <td class="class_right"><input id="username" type="text" name="username" placeholder="请输入账号"
+                                                       id="username"></td>
+                        <td id="usernameFlag"></td>
+                    </tr>
+                    <tr>
+                        <td class="class_left"><label for="password">密码</label></td>
+                        <td class="class_right"><input type="password" id="password" name="password"
+                                                       placeholder="请输入密码" id="password"></td>
+                    </tr>
+                    <tr>
+                        <td class="class_left"><label for="email">Email</label></td>
+                        <td class="class_right"><input type="email" name="email" placeholder="请输入Email" id="email">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="class_left"><label for="realname">姓名</label></td>
+                        <td class="class_right"><input type="text" name="realname" placeholder="请输入真实姓名"
+                                                       id="realname"></td>
+                    </tr>
+                    <tr>
+                        <td class="class_left"><label for="phone">手机号</label></td>
+                        <td class="class_right"><input type="tel" name="phone" placeholder="请输入手机号" id="phone"></td>
+                    </tr>
+                    <tr>
+                        <td class="class_left">性别</td>
+                        <td>
+                            &nbsp;&nbsp;<input type="radio" name="male" value="male" checked>男&nbsp;
+                            <input class="male" type="radio" name="male" value="female">女
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="class_left"><label for="birthday">出生日期</label></td>
+                        <td class="class_right"><input type="date" name="birthday" id="birthday"></td>
+                    </tr>
+                    <tr>
+                        <td class="commit" colspan="2" align="center"><input type="submit" name="submit" value="提交">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+    <div class="right">
+        <p> 已有账户?<a href="#">立即登录</a></p>
+    </div>
+</div>
+<script>
+    document.getElementById("form").onsubmit = function () {
+        return checkName() && checkPassword();
+    }
+
+    //校验用户名
+    function checkName() {
+        var username = document.getElementById("username").value;
+        var reg_user = /^\w{6,12}$/;
+        var flag = reg_user.test(username);
+        if (flag === true) {
+            document.getElementById("usernameFlag").innerHTML = "OK";
+        } else {
+            document.getElementById("usernameFlag").innerHTML = "ERROR";
+        }
+        return flag;
+    }
+
+    function checkPassword() {
+        var password = document.getElementById("password");
+        return false;
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE students SYSTEM "D:\桌面\Web\src\XML\约束\dtd\student.dtd">
+<!--外部引用-->
+
+<!--<!DOCTYPE students[-->
+<!--        <!ELEMENT students (student*)>-->
+<!--        &lt;!&ndash;根标签students 里面有子标签student 可以出现*次&ndash;&gt;-->
+<!--        <!ELEMENT student (name,age,sex)>-->
+<!--        &lt;!&ndash;标签student 有子标签name,age,sex可以出现1次&ndash;&gt;-->
+<!--        <!ELEMENT name (#PCDATA)>-->
+<!--        <!ELEMENT age (#PCDATA)>-->
+<!--        <!ELEMENT sex (#PCDATA)>-->
+<!--        &lt;!&ndash;以上内容代表格式为字符串&ndash;&gt;-->
+<!--        <!ATTLIST student number ID #REQUIRED>-->
+<!--        &lt;!&ndash;设置属性:student有number属性,类型为ID:唯一,REQUIRED:必须出现&ndash;&gt;-->
+<!--        ]>-->
+<!--内部引用-->
+<students>
+    <student number="s1">
+        <name>1</name>
+        <age>2</age>
+        <sex>3</sex>
+    </student>
+    <student number="s2">
+        <name>1</name>
+        <age>2</age>
+        <sex>3</sex>
+    </student>
+</students>

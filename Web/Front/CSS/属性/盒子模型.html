@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*
+        margin 外边距
+        padding 内边距 (相对概念)
+            默认情况下,内边距会影响整个盒子的大小
+        float 浮动
+            left
+            right
+         */
+        div {
+            border: 1px solid red;
+        }
+
+        .div1 {
+            width: 200px;
+            height: 200px;
+            box-sizing: border-box;
+            /*设置盒子固定大小*/
+            padding: 50px;
+        }
+
+        .div2 {
+            width: 100px;
+            height: 100px;
+            /* margin: 50px; */
+        }
+
+        .div3 {
+            width: 100px;
+            height: 100px;
+            float: left;
+        }
+
+        .div4 {
+            width: 100px;
+            height: 100px;
+            float: left;
+        }
+
+        .div5 {
+            width: 100px;
+            height: 100px;
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="div1">
+        <div class="div2">
+            <p>div2</p>
+        </div>
+        <p>div1</p>
+    </div>
+    <div class="div3">aaa</div>
+    <div class="div4">bbb</div>
+    <div class="div5">ccc</div>
+</body>
+
+</html>

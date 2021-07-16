@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <img id="picture" src="./白色.jfif" alt="picture">
+    <script>
+        let isWhite = true;
+        const picture = document.getElementById("picture");
+        picture.onclick = function () {
+            if (isWhite === true) {
+                isWhite = false;
+                picture.src = "黑色.jfif";
+            } else {
+                isWhite = true;
+                picture.src = "白色.jfif";
+            }
+        }
+    </script>
+</body>
+
+</html>
