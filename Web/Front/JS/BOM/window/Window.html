@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+            Window:窗口对象
+                1.创建:
+                2.方法:
+                    1.与弹出窗口有关的方法:
+                        alert();显示带有一段消息和一个确定按钮的警告框
+                        confirm();显示带有一段消息以及确定和取消按钮的对话窗
+                            确定返回true
+                            取消返回false
+                        prompt();显示可提示用户输入的对话框
+                            返回用户输入的值
+                    2.与打开关闭有关的方法
+                        open();打开一个新窗口
+                            返回一个新的window对象
+                        close();
+                            谁调用,关谁
+                    3.与定时器有关的方法
+                        setTimeout();定时器(毫秒):只执行一次
+                            参数:
+                                1.js对象或者方法对象
+                                2.毫秒值
+                            返回值:
+                                唯一标识,用于取消定时器
+                        clearTimeout();取消定时器
+                            参数:定时器的唯一标识
+                        setInterval();按照指定的周期(毫秒)来执行
+                        clearInterval();取消定时器
+                3.属性:
+                    1.获取其他BOM对象
+                        history
+                        location
+                        navigator
+                        screen
+                    2.获取DOM对象
+                        document
+                4.特点:
+                    1.window对象不需要创建可以直接使用window使用. window.方法名();
+                    2.window引用可以省略, 方法名();
+        */
+        //警告框
+        alert("hello");
+        window.alert("nihao");
+        //选择框
+        var flag = confirm("您确定要退出吗?");
+        if (flag) {
+            alert("再见");
+        }
+        //输入框
+        var result = prompt("请输入用户名");
+        document.write(result + "<br>");
+    </script>
+</head>
+
+<body>
+    <input id="openWindow" type="button" value="打开百度">
+    <input id="closeWindow" type="button" value="关闭百度">
+    <script>
+        openWindow = document.getElementById("openWindow");
+        var newWindow
+        openWindow.onclick = function () {
+            //打开新窗口
+            newWindow = open("https://www.baidu.com");
+        }
+        closeWindow = document.getElementById("closeWindow");
+        closeWindow.onclick = function () {
+            //关闭新窗口
+            newWindow.close();
+        }
+        //一次性定时器
+        function fun1() {
+            alert("boom~");
+        }
+        setTimeout(fun1, 50);
+
+        function fun() {
+            document.write("boom~<br>");
+        }
+        //循环定时器
+        var timeOut = setInterval(fun, 100);
+        //取消定时器
+        setTimeout(fun3, 300)
+
+        function fun3() {
+            clearInterval(timeOut);
+        }
+    </script>
+</body>
+
+</html>

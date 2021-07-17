@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        1.字体、文本
+            font-size :字体大小
+            color :文本颜色
+            text-align :对齐方式
+            line-height :行高
+        2.背景 background
+        3.边框 border
+        4.尺寸
+            width 宽度
+            heigth 高度
+        5.盒子模型
+    -->
+    <style>
+        .font {
+            font-size: 40px;
+            color: darkkhaki;
+            text-align: center;
+            line-height: 200px;
+            /*border: 10px solid red;*/
+            /*10px 实线 红色*/
+            border-style: inset;
+        }
+
+        #size {
+            border: 1px solid yellow;
+            width: 100px;
+            height: 100px;
+        }
+
+        .background {
+            border: 1px solid blue;
+            width: 200px;
+            height: 200px;
+            background: url(../../HTML/1.png) no-repeat center;
+            /* 图片 不重复 居中 */
+        }
+    </style>
+</head>
+
+<body>
+    <p class="font">你好世界</p>
+    <div id="size"></div>
+    <div class="background"></div>
+</body>
+
+</html>

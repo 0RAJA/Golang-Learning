@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: url(../../HTML/13246843939556355.jpg) no-repeat center;
+            background-size: 100%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            /*box-sizing: border-box;*/
+        }
+
+        .login_in {
+            width: 1000px;
+            height: 500px;
+            /*border: 8px solid gray;*/
+            /*background: whitesmoke;*/
+            display: flex;
+            /* 水平居中 */
+            margin: 15px auto auto;
+        }
+
+        .left {
+            float: left;
+            margin: 15px;
+        }
+
+        .left > p:first-child {
+            font: italic 700 20px "微软雅黑";
+        }
+
+        .left > p:last-child {
+            font: italic 600 18px 宋体;
+        }
+
+
+        .left,
+        .center,
+        .right {
+            flex: auto;
+        }
+
+        .class_left {
+            width: 100px;
+            height: 50px;
+            text-align: right;
+        }
+
+        .class_right {
+            padding: 15px;
+        }
+
+        #username,
+        #password,
+        #password2,
+        #email,
+        #realName,
+        #phone,
+        #idNum,
+        #birthday {
+            width: 200px;
+            height: 30px;
+            border: 1px solid gray;
+            /* 设置边框圆角 */
+            border-radius: 5px;
+            padding-left: 10px;
+        }
+
+        .male {
+            font-family: "微软雅黑", serif;
+            font-size: 18px;
+        }
+
+        .commit input {
+            font-family: "微软雅黑", serif;
+            font-size: 18px;
+        }
+
+        .right p {
+            margin-left: 50px;
+        }
+
+        .right {
+            float: right;
+            font: italic 700 20px "微软雅黑";
+            margin: 15px;
+        }
+
+        .right p a {
+            color: steelblue;
+        }
+    </style>
+    <script>
+        var userNameOK = false, passwordOK = false, sendNumOK = false;
+
+        document.getElementById("form").onsubmit = function () {
+            return userNameOK && passwordOK && sendNumOK;
+        }
+
+        function isLegal(str) {
+            const reg = new RegExp(`^.*[\\\#\!\@\$\%\&\*].*`);
+            return !reg.test(str);
+
+            // return reg.test(str) === false;
+        }
+
+        function checkName() {
+            var userName = document.getElementById("username").value;
+            if (userName.length === 0) {
+                document.getElementById("usernameOK").innerHTML = "";
+                userNameOK = false;
+                return;
+            }
+            const flag = isLegal(userName);
+            if (flag && userName.length <= 10) {
+                document.getElementById("usernameOK").innerHTML = "OK";
+                userNameOK = true;
+            } else {
+                document.getElementById("usernameOK").innerHTML = "含有非法字符或长度有误";
+                userNameOK = false;
+            }
+        }
+
+
+        function checkPassword2() {
+            const password1 = document.getElementById("password").value;
+            const password2 = document.getElementById("password2").value;
+            if (password1.length === 0 || password2.length === 0) {
+                document.getElementById("passwordOK2").innerHTML = "";
+                passwordOK = false;
+                return;
+            }
+            if (password1 === password2 && password2.length >= 6) {
+                document.getElementById("passwordOK2").innerHTML = "OK";
+                passwordOK = true;
+            } else {
+                document.getElementById("passwordOK2").innerHTML = "ERROR";
+                passwordOK = false;
+            }
+        }
+
+        function sendNum(str) {
+            let xmlHttp;
+            document.getElementById("sendNumOK").innerHTML = "OK";
+            sendNumOK = true;
+            return;
+            if (str.length === 0) {
+                document.getElementById("sendNumOK").innerHTML = "";
+                return;
+            }
+            if (window.XMLHttpRequest) {
+                xmlHttp = new XMLHttpRequest();
+            } else {
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                    if (xmlHttp.responseText === "true") {
+                        document.getElementById("sendNumOK").innerHTML = "OK";
+                        sendNumOK = true;
+                    } else {
+                        document.getElementById("sendNumOK").innerHTML = "ERROR";
+                        sendNumOK = false;
+                    }
+                }
+            }
+            const phone = document.getElementById("phone");
+            xmlHttp.open("GET", "URL?phone=" + phone + "&" + "str" + str, true);
+            xmlHttp.send();
+        }
+    </script>
+</head>
+
+<body>
+<div class="login_in">
+    <div class="left">
+        <p>新用户注册</p>
+        <p>USER REGISTER</p>
+    </div>
+    <div class="center">
+        <div class="table">
+            <form action="#" method="POST" id="form">
+                <table>
+                    <tr>
+                        <td class="class_left"><label for="username">用户名</label></td>
+                        <td class="class_right"><input type="text" name="username" placeholder="请输入账号"
+                                                       id="username" onkeyup="checkName()"></td>
+                        <td id="usernameOK"></td>
+                    </tr>
+                    <tr>
+                        <td class="class_left"><label for="password">密码</label></td>
+                        <td class="class_right"><input type="password" name="password" placeholder="请输入密码"
+                                                       id="password"></td>
+                        <td id="passwordOK"></td>
+                    </tr>
+                    <tr>
+                        <td class="class_left"><label for="password2">重新输入密码</label></td>
+                        <td class="class_right"><input type="password" placeholder="请再次输入密码"
+                                                       id="password2" onkeyup="checkPassword2()"></td>
+                        <td id="passwordOK2"></td>
+                    </tr>
+                    <tr>
+                        <td class="class_left"><label for="email">Email</label></td>
+                        <td class="class_right"><input type="email" name="email" placeholder="请输入Email" id="email">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="class_left">性别</td>
+                        <td>
+                            <label>
+                                &nbsp;&nbsp;
+                                <input type="radio" name="male" value="male" checked>
+                            </label>男&nbsp;
+                            <label>
+                                &nbsp;
+                                <input class="male" type="radio" name="male" value="female">
+                            </label>女
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="class_left"><label for="birthday">出生日期</label></td>
+                        <td class="class_right"><input type="date" name="birthday" id="birthday"></td>
+                    </tr>
+                    <tr>
+                        <td class="class_left"><label for="realName">真实姓名</label></td>
+                        <td class="class_right"><label for="realName"></label><input type="text" name="realName"
+                                                                                     placeholder="请输入真实姓名"
+                                                                                     id="realName"></td>
+                    </tr>
+                    <tr>
+                        <td class="class_left"><label for="idNum">身份证号</label></td>
+                        <td class="class_right"><input type="text" name="idNum" placeholder="请输入身份证号" id="idNum"></td>
+                    </tr>
+                    <tr>
+                        <td class="class_left"><label for="phone">手机号</label></td>
+                        <td class="class_right"><input type="tel" name="phone" placeholder="请输入手机号" id="phone"><input
+                                type="button" value="发送验证码" onclick="sendNum(this.value)"></td>
+                        <td id="sendNumOK"></td>
+                    </tr>
+                    <tr>
+                        <td class="commit" colspan="2" align="center"><input type="submit" name="submit" value="提交">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+    <div class="right">
+        <p> 已有账户?<a href="#">立即登录</a></p>
+    </div>
+</div>
+</body>
+
+</html>

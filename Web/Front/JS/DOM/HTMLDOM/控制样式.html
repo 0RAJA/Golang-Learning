@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+        HTML DOM
+            1.标签体的设置和获取: innerHTML
+            2.使用htm1元素对象的属性
+            3.控制元素样式
+                1.使用元素的style属性来设置。
+                2.使用className属性来更改className
+                    提前设置好样式
+        */
+    </script>
+    <style>
+        .div2 {
+            width: 300px;
+            font-size: 25px;
+        }
+
+        .div3 {
+            width: 100px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div1">
+        div1
+    </div>
+    <div class="div2">
+        div2
+    </div>
+    <script>
+        var div1 = document.getElementById("div1");
+        div1.onclick = function () {
+            div1.style.border = "1px solid red";
+            div1.style.width = "200px";
+            //font-size --> fontSize
+            div1.style.fontSize = "20px";
+        }
+        var div2 = document.getElementsByClassName("div2")[0];
+        div2.onclick = function () {
+            div2.className = "div3";
+        }
+    </script>
+</body>
+
+</html>

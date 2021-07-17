@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /* 
+            1.创建正则表达式
+                1. var reg = new RegExp("正则表达式");
+                2. var reg = /正则表达式/
+            2.方法
+                1.text(参数):验证是否符合正则表达式
+        */
+        var reg = new RegExp("\w{6,12}");
+        var reg2 = /^\w{6,12}$/;
+        var username = "A1231212312311321A";
+        var flag = reg2.test(username);
+        alert(flag);
+        /*
+        1.单个字符:[]
+            如: [a] [ab] [a-ZA-Z0-9_]
+            特殊符号代表特殊含义的单个字符:
+            \d:单个数字字符[0-9]
+            \w:单个单词字符[a-ZA-Z0-9_]
+        2.量词符号:
+            ?:表示出现0次或1次
+            *:表示出现0次或多次
+            +:出现1次或多次
+            {m,n}:表示m<=数量<=n
+                m如果缺省: {,n}:最多n次
+                n如果缺省: {m,}最少m次
+        3.开始结束符号
+            ^:开始
+            $:结束
+        */
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

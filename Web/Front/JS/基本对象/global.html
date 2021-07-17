@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+            1.特点:
+                全局对象,这个global中封装的方法不需要任何对象就可以直接调用 方法名();
+            2.方法:
+                encodeURI():url编码
+                decodeURI():url解码
+
+                encodeURIComponent():编码的字符更多
+                decodeURIComponent()
+
+                parseInt():将字符串转为数字(只会从前往后转换数字,不是数字就停止)
+
+                isNaN():判断一个值是否是NaN
+                    NaN连自己都不认识 NaN参与的==比较全部是false
+
+                eval():将JavaScript字符串转换为代码来执行
+        */
+        var str = "王伟";
+        var codeURI = encodeURI(str) + "<br>"
+        document.write(codeURI);
+        document.write(decodeURI(codeURI))
+        //字符串转数字
+        var str1 = "123abc";
+        var num = parseInt(str1);
+        document.write(num + "<br>");
+        //NaN的比较
+        var nan = NaN
+        document.write(nan == NaN + "<br>");
+        document.write(isNaN(nan) + "<br>");
+        //解析JavaScript代码
+        var jscode = "alert(123)";
+        alert(jscode);
+        eval(jscode);
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

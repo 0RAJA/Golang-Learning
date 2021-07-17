@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+                5.键盘事件:
+                    1.onkeydown:某个键盘按键被按下。
+                    2.onkeyup:某个键盘按键被松开。
+                    3.onkeypress:某个键盘按键被按下并松开。
+                6.选择和改变
+                    1.onchange:域的内容被改变。
+                    2.onselect:文本被选中。
+                7.表单事件:
+                    1.onsubmit:确认按钮被点击。
+                        方法返回false表单被阻止
+                    2.onreset:重置按钮被点击
+        */
+    </script>
+</head>
+
+<body>
+    <input id="input" type="text" placeholder="输入姓名">
+    <hr>
+    <!--另一种阻止表单提交的方法-->
+    <form action="#" id="form" onclick="return checkForm();">
+        <input type="username" id="username" name="username" placeholder="输入用户名">
+        <select id="select" name="select">
+            <option value="0" selected>--请选择--</option>
+            <option value="1">北京</option>
+            <option value="2">上海</option>
+            <option value="3">西安</option>
+        </select>
+        <input type="submit" value="提交">
+    </form>
+    <script>
+        //获取键盘输入
+        var input = document.getElementById("input");
+        input.onkeydown = function (obj) {
+            if (obj.keyCode == 13) {
+                alert("提交表单")
+            }
+        }
+        //获取改变列表
+        var select = document.getElementById("select");
+        select.onchange = function (obj) {
+            alert("选择");
+        }
+        //阻止提交
+        var form = document.getElementById("form");
+        form.onsubmit = function () {
+            return false
+        }
+        // 另一种阻止提交的方法
+        function checkForm() {
+            return false;
+        }
+    </script>
+</body>
+
+</html>

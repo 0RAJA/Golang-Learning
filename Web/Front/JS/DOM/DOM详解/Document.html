@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+            document:文档对象
+            1.创建:在html dom模型中可以使用window对象来获取
+                1.window.document
+                2.document
+            2.方法:
+                1.获取Element对象:
+                    1.getElementById(id):根据id属性值来获取元素对象,id属性值一般唯一.
+                    2.getElementsByTagName(name):通过标签名称获取标签对象,返回数组
+                    3.getElementsByClassName(name):通过class属性值获取元素对象们,返回数组
+                    4.getElementsByName(name):根据name属性值获取元素对象们,返回数组
+                2.创建其他DOM对象
+                    1.createAttribute(name):创建属性节点。
+                    2.createCommit():
+                    3.createElement():创建元素节点。
+                    4.createTextNode():创建文本节点。
+            3.属性:
+        */
+    </script>
+</head>
+
+<body>
+    <div>div1</div>
+    <div>div2</div>
+    <div>div3</div>
+    <div class="div">div4</div>
+    <div name="raja">div5</div>
+    <script>
+        //获取element对象
+        var divs = document.getElementsByTagName("div");
+        document.write(divs.length + "<br>");
+        var cls = document.getElementsByClassName("div");
+        document.write(cls.length + "<br>");
+        //创建其他DOM对象
+        var table = document.createElement("table");
+        document.write(table);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .input {
+            background-color: black;
+            height: 50px;
+        }
+
+        .input:hover {
+            background-color: white;
+        }
+    </style>
+    <script>
+        function loadXMLDoc() {
+            let xmlHttp;
+            if (window.XMLHttpRequest) {
+                // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+                xmlHttp = new XMLHttpRequest();
+            } else {
+                // IE6, IE5 浏览器执行代码
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                    document.getElementById("myDiv").innerHTML = xmlHttp.responseText;
+                }
+            }
+            xmlHttp.open("GET", "/try/ajax/demo_get.php", true);
+            xmlHttp.send();
+        }
+    </script>
+</head>
+<body>
+<div>
+    <input type="button" value="请求数据" class="input" onclick="loadXMLDoc()">
+    <div id="myDiv"></div>
+</div>
+</body>
+</html>

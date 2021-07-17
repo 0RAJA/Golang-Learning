@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音视频</title>
+</head>
+
+<body>
+    <!--
+        audio 引入外部的一个音频文件
+        属性:
+            src:路径
+            controls:有就可以用户控制
+            autoplay:控制是否自动播放--但是一般不会自动播放
+            loop:循环播放
+            muted:指示最初是否为静音,初始为false
+        -->
+    <audio src="童话镇-陈一发儿.mp3" controls loop></audio>
+    <!--遇到一个source就执行并跳过其他内容-->
+    <audio controls loop>
+        <p>您的浏览器不支持此音频,请升级浏览器</p>
+        <source src="童话镇-陈一发儿.mp3">
+        <!--IE8使用-->
+        <embed src="童话镇-陈一发儿.mp3" type="audio/mp3" width="300" height="100">
+    </audio>
+    <!--video-->
+    <video src=""></video>
+</body>
+
+</html>

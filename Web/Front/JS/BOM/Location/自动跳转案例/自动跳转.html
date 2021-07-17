@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p {
+            text-align: center;
+        }
+
+        #time {
+            color: red;
+        }
+    </style>
+    <script>
+
+    </script>
+</head>
+
+<body>
+    <p>
+        <span id="time">5</span>秒之后,自动跳转到首页...
+    </p>
+    <script>
+        var times = 5;
+        var time = document.getElementById("time");
+        setInterval(fun, 1000);
+        function fun() {
+            times--;
+            time.innerHTML = times;
+            if (times === 0) {
+                clearInterval(times);
+                location.href = "https://www.baidu.com";
+            }
+        }
+    </script>
+</body>
+
+</html>

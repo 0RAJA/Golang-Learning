@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+        1.原始数据类型
+            1. number :数字。整数/小数/NaN(not a number一个不是数字的数字类型)
+            2.string :字符串。字符串"abc" "a" 'abc'
+                string转number按照字面值转换,如果无法转换则称为NaN
+            3. boolean: true和false
+                boolean 转number 和C一样
+            4. null :一个对象为空的占位符
+            5. undefined :未定义。如果一个变量没有给初始化值，则会被默认赋值为undefined
+        2.引用数据类型
+        */
+        const num = 1;
+        const num2 = 1.2;
+        const num3 = NaN;
+        document.write(num + typeof (num) + "<br>");
+        document.write(num2 + "<br>");
+        document.write(num3 + "<br>");
+        var flag = true
+        // 比较运算符
+        // == 先类型转换再比较 === 先判断类型再比较
+        document.write(num == num2 + "<br>")
+        //逻辑运算符
+        /*
+            1. number: 0或NaN为假，其他为真
+            2. string: 除了空字符串,都为true
+            3. null&undefined: 都是false
+            4.对象: 所有对象都为true
+        */
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

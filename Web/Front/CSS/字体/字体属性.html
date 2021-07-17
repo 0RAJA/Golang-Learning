@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h2 {
+            /* 字体大小 */
+            font-size: 20px;
+        }
+
+        /*从前往后依次找*/
+        body {
+            /* 字体 */
+            font-family: "微软雅黑", Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: 18px;
+        }
+
+        .bold {
+            /* 
+            字体粗细
+            normal :正常的字体。相当于number为400.声明此值将取消之前任何设置
+            bold :粗体。相当于number为700。也相当于b对象的作用
+            bolder: IE5+特粗体
+            lighter : IE5+细体 
+            */
+            font-weight: 700;
+        }
+
+        .style {
+            /* 字体风格 */
+            font-style: normal;
+        }
+
+        /*
+        font
+        字体连写
+        1.字体连写是有顺序的不能随意换位置
+        2.其中字号和字体必须同时出现
+        */
+    </style>
+</head>
+
+<body>
+    <h2>微软雅黑</h2>
+    <p class="bold">不知道</p>
+    <em>斜体</em><br>
+    <em class="style">更正的斜体</em>
+</body>
+
+</html>

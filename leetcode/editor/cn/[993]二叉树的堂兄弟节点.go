@@ -53,7 +53,7 @@ func main() {
 
 //leetcode submit region begin(Prohibit modification and deletion)
 /*
- * Definition for a binary tree Node.
+ * Definition for a binary tree myNode.
  */
 
 type Node struct {
