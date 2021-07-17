@@ -45,6 +45,7 @@ func Insert(DB *sql.DB, person *Person) error {
 	}
 	return nil
 }
+
 func Delete(DB *sql.DB, data interface{}, way int) error {
 	var err error
 	switch way {
@@ -90,7 +91,6 @@ func Find(DB *sql.DB, name string) ([]Person, error) {
 	}
 	return list, nil
 }
-
 func handleErr(err error) {
 	if err != nil {
 		fmt.Println(err)
@@ -119,5 +119,3 @@ func main() {
 		fmt.Println(p.name, p.sal, p.tel, p.job, p.id)
 	}
 }
-
-
