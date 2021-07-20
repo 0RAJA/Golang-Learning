@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{if 0}}
+<p>if动作</p>
+注意传进来的值为0判定为false
+非0为true
+{{if .}}
+<p>传进来的内容1是:{{.}}</p>
+{{else}}
+<p>传进来的内容2是:{{.}}</p>
+{{end}}
+<hr>
+{{end}}
+{{if 0}}
+<p>迭代动作</p>
+{{range .}}
+遍历到的元素为:
+<a href={{.Email}}>{{.Name}} {{.Email}}</a>
+{{else}}
+<a>没有遍历到元素</a>
+{{end}}
+<hr>
+{{end}}
+{{if 0}}
+<p>迭代map</p>
+{{range $k,$v := .}}
+<p>键是{{$k}},值为{{$v}}</p>
+{{end}}
+<hr>
+{{end}}
+{{if 1}}
+<p>设置动作</p>
+<p>传进来的数据是{{.}}</p>
+{{with "狸猫"}}
+偷梁换柱:{{.}}
+{{else}}
+没成功{{.}}
+{{end}}
+{{end}}
+<hr>
+</body>
+</html>
