@@ -22,6 +22,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+//Regist 注册
 func Regist(w http.ResponseWriter, r *http.Request) {
 	//获取表单信息
 	username, password, email := r.PostFormValue("username"), r.FormValue("password"), r.FormValue("email")
@@ -38,5 +39,17 @@ func Regist(w http.ResponseWriter, r *http.Request) {
 	} else {
 		t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/pages/user/regist_success.html"))
 		t.Execute(w, "")
+	}
+}
+
+// CheckUserName 验证用户名
+func CheckUserName(w http.ResponseWriter, r *http.Request) {
+	//获取用户名
+	username := r.FormValue("username")
+	_, err := dao.CheckUserName(username)
+	if err != nil {
+		w.Write([]byte("OK"))
+	} else {
+		w.Write([]byte("NO"))
 	}
 }

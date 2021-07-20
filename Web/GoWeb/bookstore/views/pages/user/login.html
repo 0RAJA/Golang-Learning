@@ -25,7 +25,7 @@
                 </div>
                 <div class="msg_cont">
                     <b></b>
-                    <span class="errorMsg">请输入用户名和密码</span> <span>{{.}}</span>
+                    <span class="errorMsg" id="Msg">请输入用户名和密码</span>
                 </div>
                 <div class="form">
                     <form action="/login" method="post">
@@ -53,5 +53,10 @@
 				尚硅谷书城.Copyright &copy;2015
 			</span>
 </div>
+<script>
+    if ("{{.}}" === "用户名或密码错误") {
+        document.getElementById("Msg").innerHTML = "{{.}}"
+    }
+</script>
 </body>
 </html>

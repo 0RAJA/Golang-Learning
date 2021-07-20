@@ -9,14 +9,7 @@
             height: 420px;
             margin-top: 25px;
         }
-
     </style>
-    <script>
-        $("#errorMsg").hide();
-        if ("{{.}}" != "") {
-            $("#errorMsg").show();
-        }
-    </script>
 </head>
 <body>
 <div id="login_header">
@@ -84,6 +77,37 @@
             return true;
         }
         return false;
+    }
+    document.getElementById("errorMsg").hidden = true;
+    if ("{{.}}" != "") {
+        document.getElementById("errorMsg").hidden = false;
+    }
+    //发送ajax请求验证用户名是否存在
+    document.getElementById("username").onchange = function () {
+        let xmlHttp;
+        const username = document.getElementById("username").value;
+        if (username.length === 0) {
+            return
+        }
+        if (window.XMLHttpRequest) {
+            xmlHttp = new XMLHttpRequest();
+        } else {
+            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlHttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                const flag = xmlHttp.response;
+                if (flag === "OK") {
+                    document.getElementById("errorMsg").innerHTML = "用户名可用";
+                    document.getElementById("errorMsg").style.color = "green"
+                } else {
+                    document.getElementById("errorMsg").innerHTML = "用户名不可用";
+                    document.getElementById("errorMsg").style.color = "red"
+                }
+            }
+        }
+        xmlHttp.open("GET", "/checkUserName?username=" + username, true);
+        xmlHttp.send();
     }
 </script>
 </body>
