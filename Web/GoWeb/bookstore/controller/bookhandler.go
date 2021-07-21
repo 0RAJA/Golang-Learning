@@ -8,19 +8,60 @@ import (
 	"text/template"
 )
 
-func GetBooks(w http.ResponseWriter, r *http.Request) {
-	//获取图书
-	books, _ := dao.GetBooks()
+//IndexHandle 去首页
+func IndexHandle(w http.ResponseWriter, r *http.Request) {
+	//获取页码
+	pageNo, _ := strconv.Atoi(r.FormValue("pageNo"))
+	if r.FormValue("pageNo") == "" {
+		pageNo = 1
+	}
+	//获取分页图书
+	page, _ := dao.GetPageBooks(pageNo)
+	//解析模板文件
+	t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/index.html"))
+	//执行
+	t.Execute(w, page)
+}
+
+func GetPageBooks(w http.ResponseWriter, r *http.Request) {
+	//获取页码
+	pageNo, _ := strconv.Atoi(r.FormValue("pageNo"))
+	if r.FormValue("pageNo") == "" {
+		pageNo = 1
+	}
+	//获取分页图书
+	page, _ := dao.GetPageBooks(pageNo)
 	//解析模板文件
 	t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/pages/manager/book_manager.html"))
 	//执行
-	t.Execute(w, books)
+	t.Execute(w, page)
+}
+
+func GetPageBooksByPrice(w http.ResponseWriter, r *http.Request) {
+	//获取页码
+	pageNo, _ := strconv.Atoi(r.FormValue("pageNo"))
+	if r.FormValue("pageNo") == "" {
+		pageNo = 1
+	}
+	var page = new(model.Page)
+	min, max := r.FormValue("min"), r.FormValue("max")
+	t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/index.html"))
+	if min == "" || max == "" {
+		page, _ = dao.GetPageBooks(pageNo)
+	} else {
+		min, _ := strconv.ParseFloat(min, 10)
+		max, _ := strconv.ParseFloat(max, 10)
+		page, _ = dao.GetPageBooksByPrice(pageNo, min, max)
+	}
+	page.Min, page.Max = min, max
+	//执行
+	t.Execute(w, page)
 }
 
 func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	bookID, _ := strconv.Atoi(r.FormValue("bookID"))
 	_ = dao.DeleteBook(bookID)
-	GetBooks(w, r)
+	GetPageBooks(w, r)
 }
 
 func AddOrModify(w http.ResponseWriter, r *http.Request) {
@@ -49,6 +90,5 @@ func AddAndModify(w http.ResponseWriter, r *http.Request) {
 		book.ImgPath = "src/Web/GoWeb/bookstore/views/static/img/default.jpg"
 		_ = dao.AddBook(&book)
 	}
-	GetBooks(w, r)
+	GetPageBooks(w, r)
 }
-

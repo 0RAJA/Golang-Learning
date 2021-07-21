@@ -67,3 +67,27 @@ func TestModify(t *testing.T) {
 	}
 	fmt.Println("OK")
 }
+
+func TestGetPageBooks(t *testing.T) {
+	page, err := GetPageBooks(1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for i := 0; i < len(page.Books); i++ {
+		fmt.Println(*page.Books[i])
+	}
+	fmt.Println(page)
+}
+
+func TestGetPageBooksByPrice(t *testing.T) {
+	page, err := GetPageBooksByPrice(1, 19, 20)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for i := 0; i < len(page.Books); i++ {
+		fmt.Println(*page.Books[i])
+	}
+	fmt.Println(page)
+}

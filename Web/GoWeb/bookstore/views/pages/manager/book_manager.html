@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <title>图书管理</title>
     <link type="text/css" rel="stylesheet" href="/static/css/style.css">
+    <style>
+        #main {
+            position: relative;
+        }
+
+        #page_nav {
+            position: absolute;
+            bottom: 30px;
+            /*left:50px;*/
+        }
+    </style>
 </head>
 <body>
 
@@ -11,11 +22,10 @@
     <img class="logo_img" alt="" src="/static/img/logo.gif">
     <span class="wel_word">图书管理系统</span>
     <div>
-        <a href="/pages/manager/book_manager.html">图书管理</a>
-        <a href="/">返回商城</a>
+        <a href="/getPageBooks">图书管理</a>
+        <a href="/main">返回商城</a>
     </div>
 </div>
-
 <div id="main">
     <table>
         <tr>
@@ -26,7 +36,7 @@
             <td>库存</td>
             <td colspan="2">操作</td>
         </tr>
-        {{range .}}
+        {{range .Books}}
         <tr>
             <td>{{.Title}}</td>
             <td>{{.Price}}</td>
@@ -47,6 +57,15 @@
             <td><a href="/addOrModify">添加图书</a></td>
         </tr>
     </table>
+    <div id="page_nav">
+        <button onclick="location.href='/getPageBooks?pageNo=1'">首页</button>
+        <button id="prev" onclick="location.href='/getPageBooks?pageNo={{.GetPrevPageNo}}'">上一页</button>
+        当前是第{{.PageNo}}页 共{{.TotalPageNo}}页,共{{.TotalRecord}}条记录
+        <button onclick="location.href='/getPageBooks?pageNo={{.GetNextPageNo}}'" id="next">下一页</button>
+        <button onclick="location.href='/getPageBooks?pageNo={{.TotalPageNo}}'">末页</button>
+        到第<input name="pn" id="pn_input" value="{{.PageNo}}"/>页
+        <input type="button" value="确定" onclick="goNew()" id="bt_input">
+    </div>
 </div>
 
 <div id="bottom">
@@ -54,5 +73,22 @@
 			尚硅谷书城.Copyright &copy;2015
 		</span>
 </div>
+<script>
+    if ("{{.IsHasPrev}}" === "false") {
+        document.getElementById("prev").setAttribute("disabled", "disabled");
+    }
+
+    if ("{{.IsHasNext}}" === "false") {
+        document.getElementById("next").setAttribute("disabled", "disabled");
+    }
+
+    function goNew() {
+        const pageNo = document.getElementById("pn_input").value;
+        if (pageNo < 1 || pageNo > "{{.TotalPageNo}}") {
+            return
+        }
+        location.href = "/getPageBooks?pageNo=" + pageNo;
+    }
+</script>
 </body>
 </html>
