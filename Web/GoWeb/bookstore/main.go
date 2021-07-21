@@ -28,12 +28,11 @@ func main() {
 	//获取所有图书
 	http.HandleFunc("/getBooks", controller.GetBooks)
 	//添加图书
-	http.HandleFunc("/addBook", controller.AddBook)
+	http.HandleFunc("/addAndModify", controller.AddAndModify)
 	//删除图书
 	http.HandleFunc("/deleteBook", controller.DeleteBook)
 	//修改图书
-	http.HandleFunc("/getModifyID", controller.GetModifyID)
-	http.HandleFunc("/modify", controller.Modify)
+	http.HandleFunc("/addOrModify", controller.AddOrModify)
 	//监听
 	http.ListenAndServe(":8080", nil)
 }

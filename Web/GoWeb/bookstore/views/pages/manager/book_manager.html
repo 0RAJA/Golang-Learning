@@ -33,7 +33,7 @@
             <td>{{.Author}}</td>
             <td>{{.Sales}}</td>
             <td>{{.Stock}}</td>
-            <td><a href="/getModifyID?bookID={{.ID}}">修改</a></td>
+            <td><a href="/addOrModify?bookID={{.ID}}">修改</a></td>
             <td><a href="/deleteBook?bookID={{.ID}}">删除</a></td>
         </tr>
         {{end}}
@@ -44,7 +44,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <td><a href="/pages/manager/book_edit.html">添加图书</a></td>
+            <td><a href="/addOrModify">添加图书</a></td>
         </tr>
     </table>
 </div>

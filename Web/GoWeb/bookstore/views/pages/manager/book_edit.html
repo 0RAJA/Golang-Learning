@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>编辑图书</title>
@@ -30,7 +30,7 @@
 </div>
 
 <div id="main">
-    <form action="/addBook" method="POST">
+    <form action="/addAndModify" method="POST">
         <table>
             <tr>
                 <td>名称</td>
@@ -41,11 +41,21 @@
                 <td colspan="2">操作</td>
             </tr>
             <tr>
+                {{if .}}
+                <input name="bookID" type="hidden" value="{{.ID}}">
+                <td><input name="title" type="text" value="{{.Title}}"/></td>
+                <td><input name="price" type="text" value="{{.Price}}"/></td>
+                <td><input name="author" type="text" value="{{.Author}}"/></td>
+                <td><input name="sales" type="text" value="{{.Sales}}"/></td>
+                <td><input name="stock" type="text" value="{{.Stock}}"/></td>
+                {{else}}
                 <td><input name="title" type="text" placeholder="title"/></td>
                 <td><input name="price" type="text" placeholder="price"/></td>
                 <td><input name="author" type="text" placeholder="author"/></td>
                 <td><input name="sales" type="text" placeholder="sales"/></td>
                 <td><input name="stock" type="text" placeholder="stock"/></td>
+                <td><input type="submit" value="提交"/></td>
+                {{end}}
                 <td><input type="submit" value="提交"/></td>
             </tr>
         </table>
