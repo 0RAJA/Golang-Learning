@@ -21,7 +21,7 @@ func TestCheckUserNamePwd(t *testing.T) {
 	}
 }
 func TestCheckUserName(t *testing.T) {
-	_, err := CheckUserName("raja")
+	_, err := CheckUserName("raja1")
 	if err != nil {
 		fmt.Println("没有信息")
 	} else {

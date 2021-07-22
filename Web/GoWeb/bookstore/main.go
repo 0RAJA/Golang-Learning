@@ -11,9 +11,11 @@ func main() {
 	//直接去HTML页面
 	http.Handle("/pages/", http.StripPrefix("/pages/", http.FileServer(http.Dir("src/Web/GoWeb/bookstore/views/pages"))))
 	//去首页
-	http.HandleFunc("/main", controller.IndexHandle)
+	http.HandleFunc("/main", controller.GetPageBooksByPrice)
 	//去登录
 	http.HandleFunc("/login", controller.Login)
+	//去注销
+	http.HandleFunc("/logout", controller.Logout)
 	//去注册
 	http.HandleFunc("/regist", controller.Regist)
 	//通过ajax验证用户名是否可用

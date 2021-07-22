@@ -19,12 +19,21 @@
 <div id="header">
     <img class="logo_img" alt="" src="/static/img/logo.gif">
     <span class="wel_word">网上书城</span>
+    {{if .IsLogin}}
+    <div>
+        <span>欢迎<span class="um_span">{{.UserName}}</span>光临尚硅谷书城</span>
+        <a href="/pages/cart/cart.html">购物车</a>
+        <a href="/logout">注销</a>&nbsp;&nbsp;
+        <a href="/main">返回</a>
+    </div>
+    {{else}}
     <div>
         <a href="/pages/user/login.html">登录</a> |
         <a href="/pages/user/regist.html">注册</a> &nbsp;&nbsp;
         <a href="/pages/cart/cart.html">购物车</a>
         <a href="/pages/manager/manager.html">后台管理</a>
     </div>
+    {{end}}
 </div>
 
 <div id="main">
@@ -87,7 +96,7 @@
         </button>
         <button onclick="location.href='/getPageBooksByPrice?pageNo={{.TotalPageNo}}&min={{.Min}}&max={{.Max}}'">末页
         </button>
-        到第<input name="pn" id="pn_input" value="{{.PageNo}}" type="number"/>页
+        到第<input name="pn" id="pn_input" value="{{.PageNo}}" type="number" max="{{.TotalPageNo}}" min="1"/>页
         <input type="button" value="确定" onclick="goNew()" id="bt_input">
     </div>
 </div>

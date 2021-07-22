@@ -27,7 +27,7 @@
             <div class="login_box">
                 <div class="tit">
                     <h1>注册尚硅谷会员</h1>
-                    <span class="errorMsg" id="errorMsg">{{.}}</span>
+                    <span class="errorMsg" id="errorMsg">...</span>
                 </div>
                 <br>
                 <div class="form">
@@ -78,10 +78,7 @@
         }
         return false;
     }
-    document.getElementById("errorMsg").hidden = true;
-    if ("{{.}}" != "") {
-        document.getElementById("errorMsg").hidden = false;
-    }
+
     //发送ajax请求验证用户名是否存在
     document.getElementById("username").onchange = function () {
         let xmlHttp;

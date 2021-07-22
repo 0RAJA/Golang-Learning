@@ -8,21 +8,6 @@ import (
 	"text/template"
 )
 
-//IndexHandle 去首页
-func IndexHandle(w http.ResponseWriter, r *http.Request) {
-	//获取页码
-	pageNo, _ := strconv.Atoi(r.FormValue("pageNo"))
-	if r.FormValue("pageNo") == "" {
-		pageNo = 1
-	}
-	//获取分页图书
-	page, _ := dao.GetPageBooks(pageNo)
-	//解析模板文件
-	t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/index.html"))
-	//执行
-	t.Execute(w, page)
-}
-
 func GetPageBooks(w http.ResponseWriter, r *http.Request) {
 	//获取页码
 	pageNo, _ := strconv.Atoi(r.FormValue("pageNo"))
@@ -43,9 +28,9 @@ func GetPageBooksByPrice(w http.ResponseWriter, r *http.Request) {
 	if r.FormValue("pageNo") == "" {
 		pageNo = 1
 	}
-	var page = new(model.Page)
+	var page *model.Page
 	min, max := r.FormValue("min"), r.FormValue("max")
-	t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/index.html"))
+
 	if min == "" || max == "" {
 		page, _ = dao.GetPageBooks(pageNo)
 	} else {
@@ -54,7 +39,14 @@ func GetPageBooksByPrice(w http.ResponseWriter, r *http.Request) {
 		page, _ = dao.GetPageBooksByPrice(pageNo, min, max)
 	}
 	page.Min, page.Max = min, max
+	ok, session := dao.IsLogin(r)
 	//执行
+	if ok {
+		//已经登陆
+		page.IsLogin = true
+		page.UserName = session.UserName
+	}
+	t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/index.html"))
 	t.Execute(w, page)
 }
 

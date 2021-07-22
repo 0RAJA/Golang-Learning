@@ -48,18 +48,19 @@ func setCookie(w http.ResponseWriter, r *http.Request) {
 		Name:     "user",
 		Value:    "admin", //携带:user=admin
 		HttpOnly: true,
-		MaxAge:   100, //有效时间,不设置默认关闭浏览器之后失效,设置后按照时间失效
+		MaxAge:   20, //有效时间,不设置默认关闭浏览器之后失效,设置后按照时间失效
 	}
 	//添加第二个Cookie
 	cookie2 := http.Cookie{
 		Name:     "user2",
 		Value:    "ama",
 		HttpOnly: true,
+		MaxAge: 20,
 	}
 	//将Cookie发送给浏览器
 	//第一种:
 	//w.Header().Set("Set-Cookie", cookie.String())
-	//w.Header().Add("set", cookie2.String())
+	//w.Header().Add("SetCookie", cookie2.String())
 	//第二种:(推荐)
 	http.SetCookie(w, &cookie)
 	http.SetCookie(w, &cookie2)
@@ -71,7 +72,6 @@ func getCookies(w http.ResponseWriter, r *http.Request) {
 	/*
 		由于我们在发送请求时 Cookie 在请求头中，所以我们可以通过 Request 结构中的
 		Header 字段来获取 Cookie
-
 	*/
 	//得到所有的cookie
 	cookie := r.Header["Cookie"]
@@ -81,7 +81,7 @@ func getCookies(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/set-Cookie", setCookie)
-	http.HandleFunc("/get-Cookie", getCookies)
+	http.HandleFunc("/Set-Cookie", setCookie)
+	http.HandleFunc("/Get-Cookie", getCookies)
 	http.ListenAndServe(":8080", nil)
 }

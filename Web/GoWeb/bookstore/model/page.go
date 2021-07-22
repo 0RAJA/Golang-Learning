@@ -7,8 +7,10 @@ type Page struct {
 	PageSize    int     //每页显示的条数
 	TotalPageNo int     //总页数
 	TotalRecord int     //总记录数
-	Min         string //最小价格
-	Max         string //最大价格
+	Min         string  //最小价格
+	Max         string  //最大价格
+	IsLogin     bool    //判断是否登录
+	UserName    string  //用户
 }
 
 // IsHasPrev 是否有上一页
