@@ -11,7 +11,7 @@
 // 用一个由 n 个节点组成的链表来表示输入/输出中的链表。每个节点用一个 [val, random_index] 表示： 
 //
 // 
-// val：一个表示 Node.val 的整数。 
+// val：一个表示 Node1.val 的整数。
 // random_index：随机指针指向的节点索引（范围从 0 到 n-1）；如果不指向任何节点，则为 null 。 
 // 
 //
@@ -60,8 +60,8 @@
 //
 // 
 // 0 <= n <= 1000 
-// -10000 <= Node.val <= 10000 
-// Node.random 为空（null）或指向链表中的节点。 
+// -10000 <= Node1.val <= 10000
+// Node1.random 为空（null）或指向链表中的节点。
 // 
 // Related Topics 哈希表 链表 
 // 👍 614 👎 0
@@ -72,32 +72,32 @@ func main() {
 
 }
 
-type Node struct {
+type Node1 struct {
 	Val    int
-	Next   *Node
-	Random *Node
+	Next   *Node1
+	Random *Node1
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
 /**
-* Definition for a Node.
-* type Node struct {
+* Definition for a Node1.
+* type Node1 struct {
 *     Val int
-*     Next *Node
-*     Random *Node
+*     Next *Node1
+*     Random *Node1
 }
 */
 
-func copyRandomList(head *Node) *Node {
-	newHead := new(Node)
+func copyRandomList(head *Node1) *Node1 {
+	newHead := new(Node1)
 	newTail := newHead
 	newHead.Next = nil
-	newSlice := make([]*Node, 0)
-	mapIndex := make(map[*Node]int)
+	newSlice := make([]*Node1, 0)
+	mapIndex := make(map[*Node1]int)
 	index := 0
 	for p := head; p != nil; p, index = p.Next, index+1 {
 		mapIndex[p] = index
-		node := new(Node)
+		node := new(Node1)
 		node.Val = p.Val
 		node.Next = nil
 		newTail.Next = node
