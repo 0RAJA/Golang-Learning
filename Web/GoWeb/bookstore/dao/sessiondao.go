@@ -3,7 +3,6 @@ package dao
 import (
 	"Web/GoWeb/bookstore/model"
 	"Web/GoWeb/bookstore/utils"
-	"fmt"
 	"net/http"
 )
 
@@ -27,7 +26,6 @@ func DeleteSession(sessionID string) error {
 }
 
 func GetSessionByID(SessionID string) (*model.Session, error) {
-	fmt.Println(SessionID)
 	sqlStr := "select  * from sessions where session_id = ?"
 	var session model.Session
 	err := utils.DB.QueryRow(sqlStr, SessionID).Scan(&session.SessionID, &session.UserName, &session.UserID)
@@ -38,7 +36,7 @@ func GetSessionByID(SessionID string) (*model.Session, error) {
 }
 
 func IsLogin(r *http.Request) (bool, *model.Session) {
-	sessionPtr := &model.Session{}
+	var sessionPtr *model.Session
 	var err error
 	//判断cookie
 	cookie, _ := r.Cookie("user")
@@ -47,7 +45,6 @@ func IsLogin(r *http.Request) (bool, *model.Session) {
 		cookieValue := cookie.Value
 		//去数据库查相关session
 		sessionPtr, err = GetSessionByID(cookieValue)
-		fmt.Println(sessionPtr)
 		return err == nil, sessionPtr
 	}
 	return false, sessionPtr

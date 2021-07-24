@@ -27,6 +27,12 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 
 //Login 处理用户登录函数
 func Login(w http.ResponseWriter, r *http.Request) {
+	flag, _ := dao.IsLogin(r)
+	if flag == true {
+		//登陆过了
+		GetPageBooksByPrice(w, r)
+		return
+	}
 	//获取用户名和密码
 	username, password := r.PostFormValue("username"), r.FormValue("password")
 	//验证用户名和密码
@@ -43,8 +49,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			UserID:    user.ID,
 		}
 		//将uuid保存到数据库中
-		err:=dao.AddSession(&session)
-		if err!=nil{
+		err := dao.AddSession(&session)
+		if err != nil {
 			fmt.Println(err)
 		}
 		//创建cookie与session关联
