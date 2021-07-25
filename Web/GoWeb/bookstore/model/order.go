@@ -11,4 +11,5 @@ type Order struct {
 	NoSend       bool    //state==0
 	SendComplete bool    //state==1
 	Complete     bool    //state==2
+	UserName     string  //用户名
 }

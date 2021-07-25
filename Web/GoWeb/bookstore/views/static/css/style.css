@@ -23,8 +23,8 @@ div {
 }
 
 #main {
-    height: 460px;
-    width: 1200px;
+    height: 500px;
+    width: 1300px;
     border: 1px black solid;
     overflow: auto;
 }
@@ -231,13 +231,12 @@ h1 {
 
 /*购物车*/
 #main table {
-    margin: auto;
-    margin-top: 80px;
+    margin: 20px auto auto;
     border-collapse: collapse;
 }
 
 #main table td {
-    width: 120px;
+    width: 200px;
     text-align: center;
     border-bottom: 1px #e3e3e3 solid;
     padding: 10px;

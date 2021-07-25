@@ -11,14 +11,15 @@
         }
     </style>
 </head>
+
 <body>
 
 <div id="header">
     <img class="logo_img" alt="" src="/static/img/logo.gif">
     <span class="wel_word">我的订单</span>
     <div>
-        <span>欢迎<span class="um_span">{{.UserName}}</span>光临尚硅谷书城</span>
-        <a href="/getMyOrder">我的订单</a>
+        <span>欢迎<span id="userName" class="um_span"></span>光临尚硅谷书城</span>
+        <a href="/getMyOrders">我的订单</a>
         <a href="/logout">注销</a>&nbsp;&nbsp;
         <a href="/main">返回</a>
     </div>
@@ -34,22 +35,23 @@
             <th>详情</th>
             <th>发货</th>
         </tr>
-        {{range .Orders}}
+        {{range .}}
         <tr>
             <td>{{.OrderID}}</td>
             <td>{{.CreateTime}}</td>
             <td>{{.TotalCount}}</td>
             <td>{{.TotalAmount}}</td>
-            <td><a href="/getOrderInfo?orderId={{.OrderID}}">查看详情</a></td>
+            <td><a href="/getOrderInfo?orderID={{.OrderID}}">查看详情</a></td>
             <td class="state">
+                <input class="userName" type="hidden" value="{{.UserName}}">
                 {{if .SendComplete}}
-                <a href="/takeOrder?orderId={{.OrderID}}">确认收货</a>
+                <a href="/takeOrder?orderID={{.OrderID}}">确认收货</a>
                 {{end}}
                 {{if .NoSend}}
                 等待发货
                 {{end}}
                 {{if .Complete}}
-                交易完成
+                <span style="color: green">交易完成</span>
                 {{end}}
             </td>
         </tr>
@@ -62,5 +64,10 @@
 			尚硅谷书城.Copyright &copy;2015
 		</span>
 </div>
+<script>
+    onload = function userName() {
+        document.getElementById("userName").innerHTML = document.getElementsByClassName("userName")[0].value;
+    }
+</script>
 </body>
 </html>

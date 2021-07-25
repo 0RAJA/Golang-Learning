@@ -33,6 +33,7 @@ func GetAllOrders() (ret []*model.Order, err error) {
 	return ret, nil
 }
 
+// GetMyOrdersByUserID 通过userID获取订单信息
 func GetMyOrdersByUserID(userID int) (ret []*model.Order, err error) {
 	sql := "select id, create_time, total_count, total_amount, state, user_id from orders where user_id = ?;"
 	rows, err := utils.DB.Query(sql, userID)
@@ -49,13 +50,10 @@ func GetMyOrdersByUserID(userID int) (ret []*model.Order, err error) {
 	}
 	return ret, err
 }
-func DeleteOrder(orderID string) error {
-	err := DeleteOrderItem(orderID)
-	if err != nil {
-		return err
-	}
-	sql := "delete from orders where id = ?;"
-	_, err = utils.DB.Exec(sql, orderID)
+
+func UpDateOrderState(orderID string, state int) error {
+	sql := "update orders set state = ? where id = ?;"
+	_, err := utils.DB.Exec(sql, state, orderID)
 	if err != nil {
 		return err
 	}

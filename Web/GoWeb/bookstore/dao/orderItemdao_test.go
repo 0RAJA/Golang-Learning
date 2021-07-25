@@ -79,3 +79,11 @@ func TestGetMyOrdersByUserID(T *testing.T) {
 		fmt.Println(v)
 	}
 }
+
+func TestUpDateOrderState(T *testing.T) {
+	err := UpDateOrderState("0f0b16a4-b7d8-4929-9c47-5f3c6796cf2b", 1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+}

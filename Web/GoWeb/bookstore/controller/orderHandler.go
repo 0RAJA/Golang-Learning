@@ -97,6 +97,7 @@ func GetAllOrders(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	for _, v := range orders {
+		v.NoSend, v.NoSend, v.SendComplete = false, false, false
 		switch v.State {
 		case 0:
 			v.NoSend = true
@@ -124,4 +125,57 @@ func GetOrderInfo(w http.ResponseWriter, r *http.Request) {
 	//解析模板
 	t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/pages/order/order_info.html"))
 	_ = t.Execute(w, items)
+}
+
+// GetMyOrders 获取我的订单
+func GetMyOrders(w http.ResponseWriter, r *http.Request) {
+	flag, session := dao.IsLogin(r)
+	if flag == true {
+		//	获取用户id
+		userID := session.UserID
+		//获取用户订单信息
+		orders, err := dao.GetMyOrdersByUserID(userID)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		for _, v := range orders {
+			v.UserName = session.UserName
+			v.NoSend, v.NoSend, v.SendComplete = false, false, false
+			switch v.State {
+			case 0:
+				v.NoSend = true
+			case 1:
+				v.SendComplete = true
+			case 2:
+				v.Complete = true
+			}
+		}
+		t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/pages/order/order.html"))
+		_ = t.Execute(w, orders)
+	} else {
+		Login(w, r)
+	}
+}
+
+// SendOrder 发货
+func SendOrder(w http.ResponseWriter, r *http.Request) {
+	order := r.FormValue("orderID")
+	err := dao.UpDateOrderState(order, 1)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	GetAllOrders(w, r)
+}
+
+// TakeOrder 收货
+func TakeOrder(w http.ResponseWriter, r *http.Request) {
+	order := r.FormValue("orderID")
+	err := dao.UpDateOrderState(order, 2)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	GetMyOrders(w, r)
 }
