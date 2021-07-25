@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/gofrs/uuid"
 	"testing"
-	"time"
 )
 
 func TestOrder(t *testing.T) {
@@ -18,7 +17,6 @@ func testAddOrder(t *testing.T) {
 	orderID, _ := uuid.NewV4()
 	order := model.Order{
 		OrderID:     orderID.String(),
-		CreateTime:  time.Now(),
 		TotalCount:  2,
 		TotalAmount: 400,
 		State:       0,
@@ -47,4 +45,37 @@ func testAddOrder(t *testing.T) {
 	//保存订单项
 	AddOrderItem(&orderItem1)
 	AddOrderItem(&orderItem2)
+}
+
+func TestGetAllOrders(t *testing.T) {
+	orders, err := GetAllOrders()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for _, v := range orders {
+		fmt.Println(v)
+	}
+}
+
+func TestGetOrderItemsByOrderID(t *testing.T) {
+	items, err := GetOrderItemsByOrderID("0f0b16a4-b7d8-4929-9c47-5f3c6796cf2b")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for _, v := range items {
+		fmt.Println(v)
+	}
+}
+
+func TestGetMyOrdersByUserID(T *testing.T) {
+	orders, err := GetMyOrdersByUserID(1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for _, v := range orders {
+		fmt.Println(v)
+	}
 }

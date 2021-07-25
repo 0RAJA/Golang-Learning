@@ -15,6 +15,40 @@ func AddOrder(order *model.Order) error {
 	return nil
 }
 
+// GetAllOrders 获得所有订单
+func GetAllOrders() (ret []*model.Order, err error) {
+	sql := "select id, create_time, total_count, total_amount, state, user_id from orders;"
+	rows, err := utils.DB.Query(sql)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		var order model.Order
+		err = rows.Scan(&order.OrderID, &order.CreateTime, &order.TotalCount, &order.TotalAmount, &order.State, &order.UserID)
+		if err != nil {
+			return nil, err
+		}
+		ret = append(ret, &order)
+	}
+	return ret, nil
+}
+
+func GetMyOrdersByUserID(userID int) (ret []*model.Order, err error) {
+	sql := "select id, create_time, total_count, total_amount, state, user_id from orders where user_id = ?;"
+	rows, err := utils.DB.Query(sql, userID)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		var order model.Order
+		err := rows.Scan(&order.OrderID, &order.CreateTime, &order.TotalCount, &order.TotalAmount, &order.State, &order.UserID)
+		if err != nil {
+			return nil, err
+		}
+		ret = append(ret, &order)
+	}
+	return ret, err
+}
 func DeleteOrder(orderID string) error {
 	err := DeleteOrderItem(orderID)
 	if err != nil {

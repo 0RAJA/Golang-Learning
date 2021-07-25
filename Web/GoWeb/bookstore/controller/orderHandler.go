@@ -86,5 +86,42 @@ func Checkout(w http.ResponseWriter, r *http.Request) {
 	} else {
 		Login(w, r)
 	}
+}
 
+// GetAllOrders 获取所有订单
+func GetAllOrders(w http.ResponseWriter, r *http.Request) {
+	//获取订单
+	orders, err := dao.GetAllOrders()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	for _, v := range orders {
+		switch v.State {
+		case 0:
+			v.NoSend = true
+		case 1:
+			v.SendComplete = true
+		case 2:
+			v.Complete = true
+		}
+	}
+	//解析模板
+	t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/pages/order/order_manager.html"))
+	_ = t.Execute(w, orders)
+}
+
+// GetOrderInfo 获取订单详细信息
+func GetOrderInfo(w http.ResponseWriter, r *http.Request) {
+	//获取订单号
+	orderID := r.FormValue("orderID")
+	//查询数据库
+	items, err := dao.GetOrderItemsByOrderID(orderID)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	//解析模板
+	t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/pages/order/order_info.html"))
+	_ = t.Execute(w, items)
 }
