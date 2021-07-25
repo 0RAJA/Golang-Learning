@@ -137,3 +137,13 @@ func GetPageBooksByPrice(pageNo int, min, max float64) (*model.Page, error) {
 	page.Books = books
 	return &page, nil
 }
+
+// UpdateBook 更新图书信息
+func UpdateBook(book *model.Book) error {
+	sql := "update books set title = ?,author=?,price=?,sales=?,stock = ? where id = ?"
+	_, err := utils.DB.Exec(sql, book.Title, book.Author, book.Price, book.Sales, book.Stock, book.ID)
+	if err != nil {
+		return err
+	}
+	return nil
+}

@@ -13,6 +13,10 @@
             position: absolute;
             bottom: 30px;
         }
+
+        .book_info {
+            margin-left: 70px;
+        }
     </style>
 </head>
 <body>
@@ -77,10 +81,16 @@
                     <span class="sp1">库存:</span>
                     <span class="sp2">{{.Stock}}</span>
                 </div>
+                {{if .Stock}}
                 <div class="book_add">
                     <button class="shop">加入购物车</button>
                     <input type="hidden" name="bookID" value="{{.ID}}">
                 </div>
+                {{else}}
+                <div class="book_add">
+                    <span style="color: #eb9316">正在补货中...</span>
+                </div>
+                {{end}}
             </div>
         </div>
         {{end}}

@@ -41,6 +41,8 @@ func main() {
 	http.HandleFunc("/deleteCartItem", controller.DeleteCartItem)
 	//更新购物项
 	http.HandleFunc("/updateCartItem", controller.UpdateCartItem)
+	//结账
+	http.HandleFunc("/checkout", controller.Checkout)
 	//监听
 	http.ListenAndServe(":8080", nil)
 }

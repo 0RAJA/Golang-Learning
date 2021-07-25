@@ -52,7 +52,7 @@
         <span class="cart_span">总金额<span class="b_price">{{.TotalAmount}}</span>元</span>
         <span class="cart_span"><a href="/main">继续购物</a></span>
         <span id="clearShop" class="cart_span"><a href="/deleteCart?cartID={{.CartID}}">清空购物车</a></span>
-        <span class="cart_span"><a href="/pages/cart/checkout.html">去结账</a></span>
+        <span class="cart_span"><a href="/checkout">去结账</a></span>
     </div>
     {{else}}
     <h1 id="middle">您没有添加任何商品,请返回 <a style="color: #eb9316" href="/main">主页</a>添加</h1>
@@ -70,7 +70,16 @@
     }
 
     function deleteItem(bookName) {
-        return confirm("是否要删除 [" + bookName + "] 这本书?");
+        if (confirm("是否要删除 [" + bookName + "] 这本书?")) {
+            if ("{{.TotalCount}}" === "1") {
+                location.href = "/deleteCart?cartID={{.CartID}}"
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return false
+        }
     }
 
     //鼠标滚轮
