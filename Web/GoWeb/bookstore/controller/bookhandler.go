@@ -3,11 +3,15 @@ package controller
 import (
 	"Web/GoWeb/bookstore/dao"
 	"Web/GoWeb/bookstore/model"
+	"log"
 	"net/http"
 	"strconv"
 	"text/template"
 )
 
+func init() {
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+}
 func GetPageBooks(w http.ResponseWriter, r *http.Request) {
 	//获取页码
 	pageNo, _ := strconv.Atoi(r.FormValue("pageNo"))
@@ -19,7 +23,7 @@ func GetPageBooks(w http.ResponseWriter, r *http.Request) {
 	//解析模板文件
 	t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/pages/manager/book_manager.html"))
 	//执行
-	t.Execute(w, page)
+	_ = t.Execute(w, page)
 }
 
 func GetPageBooksByPrice(w http.ResponseWriter, r *http.Request) {
@@ -30,7 +34,6 @@ func GetPageBooksByPrice(w http.ResponseWriter, r *http.Request) {
 	}
 	var page *model.Page
 	min, max := r.FormValue("min"), r.FormValue("max")
-
 	if min == "" || max == "" {
 		page, _ = dao.GetPageBooks(pageNo)
 	} else {
@@ -47,12 +50,16 @@ func GetPageBooksByPrice(w http.ResponseWriter, r *http.Request) {
 		page.UserName = session.UserName
 	}
 	t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/index.html"))
-	t.Execute(w, page)
+	_ = t.Execute(w, page)
 }
 
 func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	bookID, _ := strconv.Atoi(r.FormValue("bookID"))
-	_ = dao.DeleteBook(bookID)
+	err := dao.DeleteBook(bookID)
+	if err != nil {
+		log.Println(err)
+		return
+	}
 	GetPageBooks(w, r)
 }
 

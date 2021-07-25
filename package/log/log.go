@@ -48,7 +48,7 @@ func main() {
 		log.Fatalln("fatal")
 		log.Panicln("panic")
 	}
-	if false {
+	if true {
 		log.Println("en...")
 		fmt.Println(log.Flags()) //Flags 返回标准记录器的输出标志。 标志位是Ldate 、 Ltime等。
 		log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)

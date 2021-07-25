@@ -36,3 +36,18 @@ func TestGetCartByUserID(t *testing.T) {
 		fmt.Println(*cart.CartItems[i])
 	}
 }
+
+func TestDeleteCartByCartID(t *testing.T) {
+	err := DeleteCartByCartID("39ee5efe-c71d-482b-92ce-b3d6469f512a")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+}
+
+func TestDeleteCartItemByID(t *testing.T) {
+	err := DeleteCartItemByID(68)
+	if err != nil {
+		return
+	}
+}

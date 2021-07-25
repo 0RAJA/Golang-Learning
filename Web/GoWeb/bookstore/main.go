@@ -33,6 +33,14 @@ func main() {
 	http.HandleFunc("/addOrModify", controller.AddOrModify)
 	//添加图书到购物车
 	http.HandleFunc("/addBookToCart", controller.AddBookToCart)
+	//获取购物车信息
+	http.HandleFunc("/getCartInfo", controller.GetCartInfo)
+	//清空购物车
+	http.HandleFunc("/deleteCart", controller.DeleteCart)
+	//删除购物项
+	http.HandleFunc("/deleteCartItem", controller.DeleteCartItem)
+	//更新购物项
+	http.HandleFunc("/updateCartItem", controller.UpdateCartItem)
 	//监听
 	http.ListenAndServe(":8080", nil)
 }

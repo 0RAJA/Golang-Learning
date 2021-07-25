@@ -27,9 +27,10 @@ func GetCartItemByBookIDAndCardID(bookID int, cardID string) (*model.CartItem, e
 	return &cartItem, nil
 }
 
-func UpdateBookCount(bookCount, bookID int, cartID string) error {
-	sqlStr := "update cart_items set count = ? where book_id = ? and cart_id = ?"
-	_, err := utils.DB.Exec(sqlStr, bookCount, bookID, cartID)
+// UpdateBookCountAndAmount 更新购物车中书的数量以及价格
+func UpdateBookCountAndAmount(item *model.CartItem) error {
+	sqlStr := "update cart_items set count = ?,amount = ? where book_id = ? and cart_id = ?"
+	_, err := utils.DB.Exec(sqlStr, item.Count, item.GetAmount(), item.Book.ID, item.CartID)
 	if err != nil {
 		return err
 	}
@@ -55,4 +56,24 @@ func GetCartItemsByCartID(cartID string) ([]*model.CartItem, error) {
 		cartItems = append(cartItems, &cartItem)
 	}
 	return cartItems, nil
+}
+
+// DeleteCartItemByCartID 根据购物车ID删除所有的购物项
+func DeleteCartItemByCartID(cartID string) error {
+	sqlStr := "delete from cart_items where cart_id = ?"
+	_, err := utils.DB.Exec(sqlStr, cartID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// DeleteCartItemByID 通过ItemID删除购物项
+func DeleteCartItemByID(cartItemID int) error {
+	sqlStr := "delete from cart_items where id = ?"
+	_, err := utils.DB.Exec(sqlStr, cartItemID)
+	if err != nil {
+		return err
+	}
+	return nil
 }

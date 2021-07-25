@@ -3,12 +3,15 @@ package controller
 import (
 	"Web/GoWeb/bookstore/dao"
 	"Web/GoWeb/bookstore/model"
-	"fmt"
 	"github.com/gofrs/uuid"
+	"log"
 	"net/http"
 	"text/template"
 )
 
+func init() {
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+}
 func Logout(w http.ResponseWriter, r *http.Request) {
 	//获取cookie
 	cookie, _ := r.Cookie("user")
@@ -39,7 +42,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	user, err := dao.CheckUserNamePwd(username, password)
 	if err != nil { //登录失败
 		t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/pages/user/login.html"))
-		t.Execute(w, "用户名或密码错误")
+		_ = t.Execute(w, "用户名或密码错误")
 	} else {
 		//生成uuid作为session的id
 		sessionID, _ := uuid.NewV4()
@@ -49,20 +52,22 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			UserID:    user.ID,
 		}
 		//将uuid保存到数据库中
-		err := dao.AddSession(&session)
+		err := dao.AddAndUpdateSession(&session)
 		if err != nil {
-			fmt.Println(err)
+			log.Println(err)
+			return
 		}
 		//创建cookie与session关联
 		cookie := http.Cookie{
 			Name:     "user",
 			Value:    sessionID.String(),
 			HttpOnly: true,
+			MaxAge:   60 * 100,
 		}
 		//将cookie发给浏览器
 		http.SetCookie(w, &cookie)
 		t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/pages/user/login_success.html"))
-		t.Execute(w, user)
+		_ = t.Execute(w, user)
 	}
 }
 
@@ -79,10 +84,10 @@ func Regist(w http.ResponseWriter, r *http.Request) {
 	err := dao.SaveUser(user)
 	if err != nil {
 		t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/pages/user/regist.html"))
-		t.Execute(w, "用户名已存在")
+		_ = t.Execute(w, "用户名已存在")
 	} else {
 		t := template.Must(template.ParseFiles("src/Web/GoWeb/bookstore/views/pages/user/regist_success.html"))
-		t.Execute(w, user)
+		_ = t.Execute(w, user)
 	}
 }
 
@@ -92,8 +97,8 @@ func CheckUserName(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue("username")
 	_, err := dao.CheckUserName(username)
 	if err != nil {
-		w.Write([]byte("OK"))
+		_, _ = w.Write([]byte("OK"))
 	} else {
-		w.Write([]byte("NO"))
+		_, _ = w.Write([]byte("NO"))
 	}
 }

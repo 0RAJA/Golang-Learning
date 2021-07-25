@@ -6,10 +6,15 @@ import (
 	"net/http"
 )
 
-//AddSession 向数据库里添加Session
-func AddSession(session *model.Session) error {
+//AddAndUpdateSession 向数据库里添加并更新Session
+func AddAndUpdateSession(session *model.Session) error {
+	sqlS := "delete from sessions where user_id = ?"
+	_, err := utils.DB.Exec(sqlS, session.UserID)
+	if err != nil {
+		return err
+	}
 	sqlStr := "insert into sessions values(?,?,?)"
-	_, err := utils.DB.Exec(sqlStr, session.SessionID, session.UserName, session.UserID)
+	_, err = utils.DB.Exec(sqlStr, session.SessionID, session.UserName, session.UserID)
 	if err != nil {
 		return err
 	}

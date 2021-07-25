@@ -12,7 +12,7 @@ const (
 	passWord   = "WW876001"                         //密码
 	ip         = "127.0.0.1"                        //ip地址
 	port       = "3306"                             //端口号
-	dbName     = "bookStore"                             //数据库名
+	dbName     = "bookStore"                        //数据库名
 	ipFormat   = "%s:%s@tcp(%s:%s)/%s?charset=utf8" //格式
 )
 
@@ -32,6 +32,3 @@ func init() {
 		panic(err)
 	}
 }
-
-
-

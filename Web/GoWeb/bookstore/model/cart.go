@@ -6,6 +6,8 @@ type Cart struct {
 	TotalCount  int         //总数量
 	TotalAmount float64     //总金额
 	UserID      int         //当前购物车所属于的用户
+	UserName    string      //用户名
+	HaveShop    bool        //是否存在购物车
 }
 
 func (cart *Cart) GetTotalCount() (ret int) {

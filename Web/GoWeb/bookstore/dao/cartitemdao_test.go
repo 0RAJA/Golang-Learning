@@ -21,9 +21,9 @@ func TestGetCartItemsByCartID(t *testing.T) {
 }
 
 func TestUpdateBookCount(t *testing.T) {
-	err := UpdateBookCount(1, 2, "7aeb09d5-cf4f-4a6a-9482-12b61bdc0670")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	//err := UpdateBookCountAndAmount(1, 2,1, "7aeb09d5-cf4f-4a6a-9482-12b61bdc0670")
+	//if err != nil {
+	//	fmt.Println(err)
+	//	return
+	//}
 }

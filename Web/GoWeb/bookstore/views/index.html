@@ -22,7 +22,7 @@
     {{if .IsLogin}}
     <div>
         <span>欢迎<span class="um_span">{{.UserName}}</span>光临尚硅谷书城</span>
-        <a href="/pages/cart/cart.html">购物车</a>
+        <a href="/getCartInfo">购物车</a>
         <a href="/logout">注销</a>&nbsp;&nbsp;
         <a href="/main">返回</a>
     </div>
@@ -30,7 +30,7 @@
     <div>
         <a href="/pages/user/login.html">登录</a> |
         <a href="/pages/user/regist.html">注册</a> &nbsp;&nbsp;
-        <a href="/pages/cart/cart.html">购物车</a>
+        <a href="/getCartInfo">购物车</a>
         <a href="/pages/manager/manager.html">后台管理</a>
     </div>
     {{end}}
@@ -131,10 +131,11 @@
     }
 
     const slice = document.getElementsByClassName("shop");
+    let s;
     for (let i = 0; i < slice.length; i++) {
         slice[i].onclick = function () {
             if ("{{.IsLogin}}" === "false") {
-                return
+                location.href = "/pages/user/login.html"
             }
             //获取要添加图书的id
             const bookID = document.getElementsByName("bookID")[i].value;
@@ -151,10 +152,11 @@
             }
             xmlHttp.onreadystatechange = function () {
                 if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                    var remind = document.getElementById("remind");
+                    const remind = document.getElementById("remind");
                     remind.parentNode.style = "visibility: none"
                     remind.innerHTML = xmlHttp.response
-                    setTimeout(function () {
+                    clearTimeout(s)
+                    s = setTimeout(function () {
                         remind.parentNode.style = "visibility: hidden"
                     }, 3000)
                 }

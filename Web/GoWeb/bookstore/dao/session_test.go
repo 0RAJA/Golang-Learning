@@ -12,7 +12,7 @@ func TestAddSession(t *testing.T) {
 		UserName:  "ww",
 		UserID:    1,
 	}
-	err := AddSession(&session)
+	err := AddAndUpdateSession(&session)
 	if err != nil {
 		fmt.Println(err)
 		return
