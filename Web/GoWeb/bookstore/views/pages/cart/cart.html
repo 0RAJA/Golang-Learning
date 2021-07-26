@@ -49,8 +49,8 @@
     </table>
 
     <div class="cart_info">
-        <span class="cart_span">购物车中共有<span class="b_count">{{.TotalCount}}</span>件商品</span>
-        <span class="cart_span">总金额<span class="b_price">{{.TotalAmount}}</span>元</span>
+        <span class="cart_span">购物车中共有<span id="TotalCount" class="b_count">{{.TotalCount}}</span>件商品</span>
+        <span class="cart_span">总金额<span id="TotalAmount" class="b_price">{{.TotalAmount}}</span>元</span>
         <span class="cart_span"><a href="/main">继续购物</a></span>
         <span id="clearShop" class="cart_span"><a href="/deleteCart?cartID={{.CartID}}">清空购物车</a></span>
         <span class="cart_span"><a href="/checkout">去结账</a></span>
@@ -119,7 +119,36 @@
         //获取用户输入的图书数量
         const bookCount = obj.value;
         //发送请求
-        location.href = "/updateCartItem?cartItemID=" + cartItemID + "&bookCount=" + bookCount;
+        const url = "/updateCartItem?cartItemID=" + cartItemID + "&bookCount=" + bookCount;
+        let xmlHttp;
+
+        function loadXMLDoc(url, cFunc) {
+            if (window.XMLHttpRequest) {// IE7+, Firefox, Chrome, Opera, Safari 代码
+                xmlHttp = new XMLHttpRequest();
+            } else {// IE6, IE5 代码
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlHttp.onreadystatechange = cFunc;
+            xmlHttp.open("GET", url, true);
+            xmlHttp.send();
+        }
+
+        function myFunction() {
+            loadXMLDoc(url, function () {
+                if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                    const reply = xmlHttp.responseXML.documentElement;
+                    const itemID = reply.getElementsByTagName("ItemID")[0].innerHTML;
+                    const amount = reply.getElementsByTagName("Amount")[0].innerHTML;
+                    const totalCount = reply.getElementsByTagName("TotalCount")[0].innerHTML;
+                    const totalAmount = reply.getElementsByTagName("TotalAmount")[0].innerHTML;
+                    document.getElementById(itemID).parentNode.nextSibling.nextSibling.innerHTML = amount;
+                    document.getElementById("TotalCount").innerHTML = totalCount;
+                    document.getElementById("TotalAmount").innerHTML = totalAmount;
+                }
+            });
+        }
+
+        myFunction();
     }
 </script>
 </body>

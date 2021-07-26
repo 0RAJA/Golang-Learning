@@ -22,12 +22,6 @@ func main() {
 	fmt.Println(list, n)
 }
 
-func handleErr(err error) {
-	if err != nil {
-		fmt.Println(err)
-	}
-}
-
 func (s Stu) FindCmp() bool {
 	return s.name == "张三"
 }

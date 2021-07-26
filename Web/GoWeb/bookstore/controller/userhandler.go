@@ -12,6 +12,8 @@ import (
 func init() {
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 }
+
+// Logout 退出登录
 func Logout(w http.ResponseWriter, r *http.Request) {
 	//获取cookie
 	cookie, _ := r.Cookie("user")
@@ -38,6 +40,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 	//获取用户名和密码
 	username, password := r.PostFormValue("username"), r.FormValue("password")
+	ok, _ := dao.CheckRoot(username, password)
+	if ok {
+		Manage(w, r)
+		return
+	}
 	//验证用户名和密码
 	user, err := dao.CheckUserNamePwd(username, password)
 	if err != nil { //登录失败

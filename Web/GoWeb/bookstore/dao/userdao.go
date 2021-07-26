@@ -13,7 +13,7 @@ import (
 func CheckUserNamePwd(name, password string) (model.User, error) {
 	sqlStr := "SELECT * FROM users WHERE binary `username` = ? AND password = ?"
 	user := model.User{}
-	err := utils.DB.QueryRow(sqlStr, name, password).Scan(&user.ID, &user.UserName, &user.Password, &user.Email)
+	err := utils.DB.QueryRow(sqlStr, name, password).Scan(&user.ID, &user.UserName, &user.Password, &user.Email,&user.IsRoot)
 	return user, err
 }
 
@@ -33,4 +33,11 @@ func SaveUser(user *model.User) error {
 		return err
 	}
 	return nil
+}
+
+func CheckRoot(name, password string) (bool, error) {
+	sqlStr := "SELECT * FROM users WHERE binary `username` = ? AND password = ?"
+	user := model.User{}
+	err := utils.DB.QueryRow(sqlStr, name, password).Scan(&user.ID, &user.UserName, &user.Password, &user.Email,&user.IsRoot)
+	return user.IsRoot, err
 }

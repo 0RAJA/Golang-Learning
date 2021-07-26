@@ -6,4 +6,5 @@ type User struct {
 	UserName string
 	Password string
 	Email    string
+	IsRoot   bool //判断是不是管理员
 }

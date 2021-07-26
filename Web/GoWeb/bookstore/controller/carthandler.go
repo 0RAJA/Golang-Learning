@@ -3,6 +3,7 @@ package controller
 import (
 	"Web/GoWeb/bookstore/dao"
 	"Web/GoWeb/bookstore/model"
+	"encoding/xml"
 	"github.com/gofrs/uuid"
 	"log"
 	"net/http"
@@ -167,6 +168,13 @@ func DeleteCartItem(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+type update struct {
+	ItemID      int
+	Amount      float64
+	TotalCount  int
+	TotalAmount float64
+}
+
 // UpdateCartItem 更新购物项
 func UpdateCartItem(w http.ResponseWriter, r *http.Request) {
 	//获取要更新的购物项的ID
@@ -183,27 +191,36 @@ func UpdateCartItem(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 			return
 		}
+		updateMessage := update{
+			ItemID: cartItemID,
+		}
 		//获取购物车中的购物项
 		var cartItems = cart.CartItems
 		for _, v := range cartItems {
 			if v.CartItemID == cartItemID {
 				v.Count = bookCount
+				v.Amount = float64(v.Count) * v.Book.Price
 				//更新数据库中改购物项的图书的数量和金额
 				err = dao.UpdateBookCountAndAmount(v)
 				if err != nil {
 					log.Println(err)
 					return
 				}
+				updateMessage.Amount = v.Amount
 				break
 			}
 		}
-		//更新cart中的总数量和金额
+		//更新数据库中的总数量和金额
 		err = dao.UpdateCart(cart)
 		if err != nil {
 			log.Println(err)
 			return
 		}
-		//重新查询购物车信息
-		GetCartInfo(w, r)
+		updateMessage.TotalCount = cart.GetTotalCount()
+		updateMessage.TotalAmount = cart.GetTotalAmount()
+		//回传信息
+		w.Header().Set("Content-Type", "text/xml;charset=utf-8")
+		v, _ := xml.Marshal(&updateMessage)
+		_, _ = w.Write(v)
 	}
 }
