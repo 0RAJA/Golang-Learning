@@ -3,15 +3,21 @@ package controller
 import (
 	"Web/GoWeb/bookstore/dao"
 	"Web/GoWeb/bookstore/model"
+	"io"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"text/template"
 )
 
+const DirPATH = "src/Web/GoWeb/bookstore/views/static/img"
+
 func init() {
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 }
+
+// GetPageBooks 获取分页图书
 func GetPageBooks(w http.ResponseWriter, r *http.Request) {
 	//获取页码
 	pageNo, _ := strconv.Atoi(r.FormValue("pageNo"))
@@ -26,6 +32,7 @@ func GetPageBooks(w http.ResponseWriter, r *http.Request) {
 	_ = t.Execute(w, page)
 }
 
+// GetPageBooksByPrice 通过价格筛选图书
 func GetPageBooksByPrice(w http.ResponseWriter, r *http.Request) {
 	//获取页码
 	pageNo, _ := strconv.Atoi(r.FormValue("pageNo"))
@@ -53,6 +60,7 @@ func GetPageBooksByPrice(w http.ResponseWriter, r *http.Request) {
 	_ = t.Execute(w, page)
 }
 
+// DeleteBook 删除图书
 func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	bookID, _ := strconv.Atoi(r.FormValue("bookID"))
 	err := dao.DeleteBook(bookID)
@@ -63,6 +71,7 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	GetPageBooks(w, r)
 }
 
+// AddOrModify 修改或者增加
 func AddOrModify(w http.ResponseWriter, r *http.Request) {
 	bookID, _ := strconv.Atoi(r.FormValue("bookID"))
 	book, _ := dao.GetBookByID(bookID)
@@ -74,6 +83,7 @@ func AddOrModify(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// AddAndModify 增加且修改
 func AddAndModify(w http.ResponseWriter, r *http.Request) {
 	book := model.Book{
 		Title:  r.FormValue("title"),
@@ -83,10 +93,28 @@ func AddAndModify(w http.ResponseWriter, r *http.Request) {
 	book.Sales, _ = strconv.Atoi(r.FormValue("sales"))
 	book.Stock, _ = strconv.Atoi(r.FormValue("stock"))
 	book.ID, _ = strconv.Atoi(r.FormValue("bookID"))
+	f, h, err := r.FormFile("imgPath")
+	if err != nil {
+		log.Println(f, h, err)
+	}
+	defer f.Close()
+	fileName := h.Filename
+	t, err := os.Create(DirPATH + "/" + fileName)
+	if err != nil {
+		http.Error(w, err.Error(),
+			http.StatusInternalServerError)
+		return
+	}
+	defer t.Close()
+	if _, err := io.Copy(t, f); err != nil {
+		http.Error(w, err.Error(),
+			http.StatusInternalServerError)
+		return
+	}
+	book.ImgPath = "static/img/" + fileName
 	if book.ID > 0 {
 		_ = dao.Modify(&book)
 	} else {
-		book.ImgPath = "src/Web/GoWeb/bookstore/views/static/img/default.jpg"
 		_ = dao.AddBook(&book)
 	}
 	GetPageBooks(w, r)

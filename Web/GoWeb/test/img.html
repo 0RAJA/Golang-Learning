@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+头像:<input type="file" id="file" accept="image/png, image/jpeg, image/gif, image/jpg"><br>
+预览:<img hidden src="" id="img" alt="预览">
+<script>
+    var imgNode = document.getElementById("file");
+    imgNode.onchange = function () {
+        var img = imgNode.files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(img)
+        var x = document.getElementById("img");
+        reader.onload = function (){
+            x.src = this.result;
+            alert(x.src);
+        }
+    }
+</script>
+</body>
+</html>

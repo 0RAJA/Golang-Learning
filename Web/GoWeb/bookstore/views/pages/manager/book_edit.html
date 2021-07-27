@@ -30,7 +30,7 @@
 </div>
 
 <div id="main">
-    <form action="/addAndModify" method="POST">
+    <form enctype="multipart/form-data" action="/addAndModify" method="POST">
         <table>
             <tr>
                 <td>名称</td>
@@ -38,7 +38,8 @@
                 <td>作者</td>
                 <td>销量</td>
                 <td>库存</td>
-                <td colspan="2">操作</td>
+                <td>封面</td>
+                <td colspan="1">操作</td>
             </tr>
             <tr>
                 {{if .}}
@@ -54,14 +55,17 @@
                 <td><input name="author" type="text" placeholder="author"/></td>
                 <td><input name="sales" type="text" placeholder="sales"/></td>
                 <td><input name="stock" type="text" placeholder="stock"/></td>
-                <td><input type="submit" value="提交"/></td>
                 {{end}}
+                <td><input type="file" name="imgPath" id="img"></td>
                 <td><input type="submit" value="提交"/></td>
             </tr>
         </table>
+        {{if .}}
+        <p><img id="imgPath" src="{{.ImgPath}}" alt="预览" style="width: 200px;margin-left: 1000px"></p>
+        {{else}}
+        <p><img id="imgPath" src="" alt="预览" style="width: 200px;margin-left: 1000px"></p>
+        {{end}}
     </form>
-
-
 </div>
 
 <div id="bottom">
@@ -69,5 +73,16 @@
 				尚硅谷书城.Copyright &copy;2015
 			</span>
 </div>
+<script>
+    const imgNode = document.getElementById("img");
+    imgNode.onchange = function () {
+        const file = imgNode.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            document.getElementById("imgPath").src = this.result;
+        }
+    }
+</script>
 </body>
 </html>

@@ -58,8 +58,8 @@ func GetBookByID(bookID int) (*model.Book, error) {
 
 // Modify 更新图书信息
 func Modify(book *model.Book) error {
-	sqlStr := "update books set title=?,author=?,price=?,sales=?,stock=? where `id`=?"
-	_, err := utils.DB.Exec(sqlStr, book.Title, book.Author, book.Price, book.Sales, book.Stock, book.ID)
+	sqlStr := "update books set title=?,author=?,price=?,sales=?,stock=?,img_path=? where `id`=?;"
+	_, err := utils.DB.Exec(sqlStr, book.Title, book.Author, book.Price, book.Sales, book.Stock, book.ImgPath, book.ID)
 	if err != nil {
 		return err
 	}

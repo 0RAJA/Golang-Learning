@@ -20,8 +20,6 @@ func main() {
 	http.HandleFunc("/regist", controller.Regist)
 	//通过ajax验证用户名是否可用
 	http.HandleFunc("/checkUserName", controller.CheckUserName)
-	//获取所有图书
-	//http.HandleFunc("/getBooks", controller.GetBooks)
 	//获取分页图书
 	http.HandleFunc("/getPageBooks", controller.GetPageBooks)
 	http.HandleFunc("/getPageBooksByPrice", controller.GetPageBooksByPrice)
