@@ -16,7 +16,7 @@ import (
 
 const (
 	key       = ".txt" //检索关键字
-	maxWorker = 32 //最大工人数
+	maxWorker = 32     //最大工人数
 )
 
 var (

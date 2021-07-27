@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"time"
 )
 
@@ -43,7 +44,7 @@ func main() {
 			<-myChan
 		}()
 	}
-	if true {
+	if false {
 		func() {
 			myChan := make(chan int)
 			ch := time.After(3 * time.Second)
@@ -54,5 +55,22 @@ func main() {
 			}()
 			<-myChan
 		}()
+	}
+	if true { //计时器可以用来超时机制
+		const timeMax = 3 * time.Second
+		ch := make(chan bool) //传输信号
+		go func() {
+			rand.Seed(time.Now().UnixNano())
+			key := rand.Intn(10)
+			fmt.Println(key)
+			time.Sleep(time.Second * time.Duration(key))
+			ch <- true
+		}()
+		select {
+		case v := <-ch:
+			fmt.Println(v)
+		case <-time.After(timeMax):
+			fmt.Println("超时")
+		}
 	}
 }

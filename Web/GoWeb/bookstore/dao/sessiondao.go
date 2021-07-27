@@ -21,6 +21,7 @@ func AddAndUpdateSession(session *model.Session) error {
 	return nil
 }
 
+// DeleteSession 删除服务器Session
 func DeleteSession(sessionID string) error {
 	sqlStr := "delete from sessions where session_id = ?"
 	_, err := utils.DB.Exec(sqlStr, sessionID)
@@ -30,6 +31,7 @@ func DeleteSession(sessionID string) error {
 	return nil
 }
 
+// GetSessionByID 通过session_ID获取session
 func GetSessionByID(SessionID string) (*model.Session, error) {
 	sqlStr := "select  * from sessions where session_id = ?"
 	var session model.Session
@@ -40,6 +42,7 @@ func GetSessionByID(SessionID string) (*model.Session, error) {
 	return &session, nil
 }
 
+// IsLogin 判断是否登录
 func IsLogin(r *http.Request) (bool, *model.Session) {
 	var sessionPtr *model.Session
 	var err error
