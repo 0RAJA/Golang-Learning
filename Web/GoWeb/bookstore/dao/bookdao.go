@@ -102,7 +102,7 @@ func GetPageBooks(pageNo int) (*model.Page, error) {
 	return &page, nil
 }
 
-// GetPageBooksByPrice 通过pageNo获取当前页数的图书信息
+// GetPageBooksByPrice 通过price获取当前页数的图书信息
 func GetPageBooksByPrice(pageNo int, min, max float64) (*model.Page, error) {
 	page := model.Page{
 		PageNo:   pageNo,
