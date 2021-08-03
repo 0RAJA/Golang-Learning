@@ -1,38 +1,39 @@
 package main
 
 import (
-	"encoding/xml"
+	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
 )
 
-type Post struct {
-	XMLName xml.Name `xml:"post"`
-	Id      string   `xml:"id,attr"`
-	Content string   `xml:"content"`
-	Author  string   `xml:"author"`
-	Xml     string   `xml:",innerxml"`
-}
-
-type Author struct {
-	Id   string `xml:"id,attr"`
-	Name string `xml:",chardata"`
+type Person struct {
+	Id     int      `json:"id,omitempty"`
+	Name   string   `json:"name,omitempty"`
+	Parent []string `json:"parent,omitempty"`
 }
 
 func main() {
-	xmlFile, err := os.Open("src/package/json/xml.xml")
+	person := []Person{
+		{
+			Id:     1,
+			Name:   "李三",
+			Parent: []string{"张三", "李四"}},
+		{
+			Id:     2,
+			Name:   "李三",
+			Parent: []string{"张三", "李四"},
+		},
+	}
+	out, err := json.Marshal(&person)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	defer xmlFile.Close()
-	xmlDate, err := ioutil.ReadAll(xmlFile)
+	fmt.Println(string(out))
+	var p []Person
+	err = json.Unmarshal(out, &p)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	var post []Post
-	xml.Unmarshal(xmlDate, &post)
-	fmt.Println(post[0])
+	fmt.Println(p[1])
 }
