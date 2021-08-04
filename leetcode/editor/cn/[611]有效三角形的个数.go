@@ -29,43 +29,32 @@ func main() {
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
-//func triangleNumber(nums []int) (ret int) {
-//	sort.Ints(nums)
-//	for i := 0; i < len(nums)-1; i++ {
-//		for j := i + 1; j < len(nums); j++ {
-//			bSearch := func(x, y int) int {
-//				low, high := i+1, j-1
-//				if low < high{
-//					return 0
-//				}
-//				for low > high {
-//					mid := (high-low)/2 + low
-//					if nums[mid]+nums[i] > nums[j] {
-//						high = mid
-//					} else {
-//						low = mid + 1
-//					}
-//				}
-//				if nums[low]+nums[i] > nums[j] {
-//					return j - low
-//				}
-//				return j - low - 1
-//			}
-//			ret += bSearch(i, j)
-//		}
-//	}
-//	return
-//}
-
 func triangleNumber(nums []int) (ret int) {
 	sort.Ints(nums)
 	for i := 0; i < len(nums)-1; i++ {
 		for j := i + 1; j < len(nums); j++ {
-			num2 := nums[i+1 : j]
-			index := sort.Search(j-i, func(x int) bool { return num2[i]+num2[x] > num2[j] })
-			ret += j - index
+			bSearch := func(x, y int) int {
+				low, high := i+1, j-1
+				if low < high{
+					return 0
+				}
+				for low > high {
+					mid := (high-low)/2 + low
+					if nums[mid]+nums[i] > nums[j] {
+						high = mid
+					} else {
+						low = mid + 1
+					}
+				}
+				if nums[low]+nums[i] > nums[j] {
+					return j - low
+				}
+				return j - low - 1
+			}
+			ret += bSearch(i, j)
 		}
 	}
+	return
 }
 
 //leetcode submit region end(Prohibit modification and deletion)
