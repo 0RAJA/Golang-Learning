@@ -37,23 +37,19 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(findPaths(36, 5, 50, 15, 3))
+	fmt.Println(findPaths(1, 3, 3, 0, 1))
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
+type Pos struct {
+	row, col, k int
+}
+
 const Mod = int(1e9 + 7)
 
-var Next = [4][2]int{{-1, 0}, {0, 1}, {1, 0}, {0, -1}}
-
 func findPaths(m int, n int, maxMove int, startRow int, startColumn int) int {
-	var Done = [51][51][51]int{}
-	for i := 0; i < m; i++ {
-		for j := 0; j < n; j++ {
-			for k := 0; k < maxMove+1; k++ {
-				Done[i][j][k] = -1
-			}
-		}
-	}
+	var Done = make(map[Pos]int)
+	var Next = [4][2]int{{-1, 0}, {0, 1}, {1, 0}, {0, -1}}
 	var dfs func(r, c, k int) int
 	dfs = func(r, c, k int) (ret int) {
 		if r < 0 || c < 0 || r >= m || c >= n {
@@ -62,13 +58,21 @@ func findPaths(m int, n int, maxMove int, startRow int, startColumn int) int {
 		if k <= 0 {
 			return 0
 		}
-		if Done[r][c][k] != -1 {
-			return Done[r][c][k]
+		if x, ok := Done[Pos{
+			row: r,
+			col: c,
+			k:   k,
+		}]; ok {
+			return x
 		}
 		for i := 0; i < len(Next); i++ {
 			ret += dfs(r+Next[i][0], c+Next[i][1], k-1) % Mod
 		}
-		Done[r][c][k] = ret
+		Done[Pos{
+			row: r,
+			col: c,
+			k:   k,
+		}] = ret
 		return ret
 	}
 	return dfs(startRow, startColumn, maxMove) % Mod
