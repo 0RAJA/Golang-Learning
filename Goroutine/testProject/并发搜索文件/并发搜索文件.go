@@ -41,7 +41,7 @@ func main() {
 }
 
 func waitingCenter() { //控制中心
-	for {              //一直监听各路消息
+	for { //一直监听各路消息
 		select {
 		case path := <-searchRequest: //接收到需求,分配任务
 			nowWorker++
