@@ -1,5 +1,9 @@
 package Trie
 
+import (
+	"sync"
+)
+
 type Trie struct {
 	prefix byte
 	result []string
@@ -11,6 +15,7 @@ const (
 )
 
 var (
+	mutex      sync.Mutex
 	resultChan = make(chan string) //结果通道
 	downChan   = make(chan struct{})
 	worksChan  = make(chan *Trie)
@@ -24,6 +29,8 @@ func Constructor() Trie {
 
 /** Inserts a word into the trie. */
 func (this *Trie) Insert(word, value string) {
+	mutex.Lock()
+	defer mutex.Unlock()
 	root := this
 	for i := 0; i < len(word); i++ {
 		if root.suffix[word[i]] == nil {

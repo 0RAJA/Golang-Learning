@@ -3,65 +3,51 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"os"
+	mTire "package/structure/Trie"
 	"sort"
 	"strings"
 )
 
 /*不要通过共享内存来通信，要通过通信来共享内存*/
 
-import (
-	"os"
-)
-
 const (
 	MaxWorker = 32 //最大工人数
 )
 
 var (
-	path          = ""                //搜索路径
-	name          = ""                //文件名
-	nowWorker     = 0                 //目前工作工人数
-	countResult   []string            //结果总数
-	foundResult   = make(chan string) //发现可记录结果的通道
+	path      = "D:" //搜索路径
+	name      = "你的" //文件名
+	nowWorker = 0    //目前工作工人数
+	//countResult   []string            //结果总数
+	//foundResult   = make(chan string) //发现可记录结果的通道
 	searchRequest = make(chan string) //发现需要工人执行的任务的通道
 	doneWork      = make(chan bool)   //通知工人完成工作的通道
+	tire          = mTire.Constructor()
 )
 
 func main() {
-	inputMessage() //输入搜索信息
-	toSearch()     //去搜索
-	printResults() //打印结果
+	pathFormat()
+	toSearch() //去搜索
+	for {
+		inputMessage() //输入搜索信息
+		printResults() //打印结果
+	}
+}
+
+func pathFormat() {
+	path = strings.Replace(path, "\\", "/", -1)
+	path = strings.Replace(path, "//", "/", -1)
+	if path[len(path)-1] != '/' {
+		path += "/"
+	}
 }
 
 func inputMessage() {
-	var err error
 	buf := bufio.NewReader(os.Stdin)
-	for {
-		fmt.Println("输入搜素路径:")
-		path, err = buf.ReadString('\n')
-		path = strings.TrimRight(path, "\n")
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-		path = strings.Replace(path, "\\", "/", -1)
-		path = strings.Replace(path, "//", "/", -1)
-		if path[len(path)-1] != '/' {
-			path += "/"
-		}
-		fileInfo, err := os.Stat(path)
-		if err != nil {
-			fmt.Println("路径出错,err:", err)
-			continue
-		} else if !fileInfo.IsDir() {
-			fmt.Println("非路径,err:", err)
-		}
-		break
-	}
 	fmt.Println("输入搜索文件名")
 	name, _ = buf.ReadString('\n')
 	name = strings.TrimRight(name, "\n")
-
 }
 
 func toSearch() {
@@ -83,14 +69,13 @@ func waitingCenter() { //控制中心
 			if nowWorker == 0 { //所有工人都完成了工作就over
 				return
 			} //所有工人都完成了任务,结束程序
-		case path := <-foundResult: //发现可记录结果的通知
-			countResult = append(countResult, path)
 		}
 	}
 }
 
 //打印数据
 func printResults() {
+	countResult := tire.Search(name)
 	sort.Slice(countResult, func(i, j int) bool {
 		return len(countResult[i]) < len(countResult[j])
 	})
@@ -114,8 +99,8 @@ func search(path string, master bool) {
 				} else { //没有多余工人就自己干
 					search(newPath, false)
 				}
-			} else if kmp(fileInfo.Name(), name) {
-				foundResult <- newPath
+			} else {
+				tire.Insert(fileInfo.Name(), newPath)
 			}
 		}
 	}
