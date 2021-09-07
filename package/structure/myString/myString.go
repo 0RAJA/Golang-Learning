@@ -22,7 +22,7 @@ func Kmp(s1, s2 string) int {
 
 //返回模板串s的next数组
 func getNext(s string) []int {
-	next := make([]int, len(s)+2)
+	next := make([]int, len(s)+1)
 	next[1] = 0
 	for i, j := 1, 0; i < len(s); {
 		if j == 0 || s[i-1] == s[j-1] {
