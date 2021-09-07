@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	maxWorker = 32 //最大工人数
+	MaxWorker = 32 //最大工人数
 )
 
 var (
@@ -108,7 +108,7 @@ func search(path string, master bool) {
 			}
 			newPath := path + fileInfo.Name()
 			if fileInfo.IsDir() { //文件夹--发现任务--通知控制中心
-				if nowWorker < maxWorker { //有可用工人就用其他工人干
+				if nowWorker < MaxWorker { //有可用工人就用其他工人干
 					searchRequest <- newPath
 				} else { //没有多余工人就自己干
 					search(newPath, false)

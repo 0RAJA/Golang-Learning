@@ -1,12 +1,9 @@
 package main
 
-import (
-	"fmt"
-	"os"
-)
+import "fmt"
 
 func main() {
-	path := "D:/Games"
-	f, err := os.Stat(path)
-	fmt.Println("file:", f, "error:", err)
+	var a map[int]int
+	a = make(map[int]int)
+	fmt.Println(a == nil)
 }
