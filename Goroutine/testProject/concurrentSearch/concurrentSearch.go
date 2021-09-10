@@ -108,39 +108,3 @@ func search(path string, master bool) {
 		doneWork <- true
 	}
 }
-
-func kmp(s1, temples string) bool {
-	if len(s1) < len(temples) {
-		return false
-	}
-	next := make([]int, len(temples)+1)
-	getNext(temples, next)
-	for i, j := 1, 1; i <= len(s1); {
-		if j == 0 || s1[i-1] == temples[j-1] {
-			i++
-			j++
-		} else {
-			j = next[j]
-		}
-		if j > len(temples) {
-			return true
-		}
-	}
-	return false
-}
-
-func getNext(p string, next []int) {
-	for i, j := 1, 0; i < len(p); i++ {
-		if j == 0 || p[i-1] == p[j-1] {
-			i++
-			j++
-			if p[i-1] == p[j-1] {
-				next[i] = next[j]
-			} else {
-				next[i] = j
-			}
-		} else {
-			j = next[j]
-		}
-	}
-}

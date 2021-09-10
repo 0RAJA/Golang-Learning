@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+	"sync"
 )
 
 /*不要通过共享内存来通信，要通过通信来共享内存*/
@@ -18,13 +19,14 @@ const (
 )
 
 var (
-	path          = ""                //搜索路径
-	name          = ""                //文件名
-	nowWorker     = 0                 //目前工作工人数
-	countResult   []string            //结果总数
-	foundResult   = make(chan string) //发现可记录结果的通道
-	searchRequest = make(chan string) //发现需要工人执行的任务的通道
-	doneWork      = make(chan bool)   //通知工人完成工作的通道
+	path                              = "" //搜索路径
+	name                              = "" //文件名
+	nowWorker     int64               = 0  //目前工作工人数
+	countResult   []string                 //结果总数
+	foundResult   = make(chan string)      //发现可记录结果的通道
+	searchRequest = make(chan string)      //发现需要工人执行的任务的通道
+	doneWork      = make(chan bool)        //通知工人完成工作的通道
+	mutex         = sync.Mutex{}
 )
 
 func main() {
@@ -76,7 +78,9 @@ func waitingCenter() { //控制中心
 	for { //一直监听各路消息
 		select {
 		case path := <-searchRequest: //接收到需求,分配任务
-			nowWorker++
+			if nowWorker > MaxWorker {
+				fmt.Println(nowWorker)
+			}
 			go search(path, true)
 		case <-doneWork: //工人完成工作,增加空闲工人数
 			nowWorker--
@@ -109,9 +113,13 @@ func search(path string, master bool) {
 			}
 			newPath := path + fileInfo.Name()
 			if fileInfo.IsDir() { //文件夹--发现任务--通知控制中心
+				mutex.Lock()
 				if nowWorker < MaxWorker { //有可用工人就用其他工人干
+					nowWorker++
+					mutex.Unlock()
 					searchRequest <- newPath
 				} else { //没有多余工人就自己干
+					mutex.Unlock()
 					search(newPath, false)
 				}
 			} else if kmp(fileInfo.Name(), name) {
