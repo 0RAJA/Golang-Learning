@@ -71,64 +71,89 @@ func main() {
 
 //leetcode submit region begin(Prohibit modification and deletion)
 
-type pair struct {
-	status string
-	step   int
+// Pair 状态结构体
+type Pair struct {
+	status string //具体状态
+	step   int    //到达此状态所用步数
 }
 
+var (
+	queue   []Pair                  //队列
+	deadMap = make(map[string]bool) //标记
+)
+
+// START 起始位置
+const START = "0000"
+
 func openLock(deadends []string, target string) int {
-	const start = "0000"
-	if start == target {
+	//最开始判断下
+	if START == target {
 		return 0
-	}
-	deadMap := make(map[string]bool, 0)
+	} //最开始就在起始点就不用走了
 	for _, s := range deadends {
 		deadMap[s] = true
 	}
-	if deadMap[target] == true || deadMap[start] == true {
+	if deadMap[target] == true || deadMap[START] == true { //如果目标点有障碍物或者起始点有障碍物说明过不去
 		return -1
 	}
-	//获取所有改变的列表
-	get := func(status string) (ret []string) {
-		s := []byte(status)
-		for i, v := range s {
-			s[i] = v - 1
-			if s[i] < '0' {
-				s[i] = '9'
-			}
-			ret = append(ret, string(s))
-			s[i] = v + 1
-			if s[i] > '9' {
-				s[i] = '0'
-			}
-			ret = append(ret, string(s))
-			s[i] = v //恢复原样
-		}
-		return
-	}
 	//广搜
-	queue := []pair{{
-		status: start,
-		step:   0,
-	}}
-	deadMap[start] = true
-	for len(queue) > 0 {
-		p := queue[0]
-		queue = queue[1:]
-		for _, v := range get(p.status) {
-			if deadMap[v] == false {
-				if v == target {
-					return p.step + 1
+	bfs := func() int {
+		Push(Pair{ //入队
+			status: START,
+			step:   0,
+		})
+		deadMap[START] = true //标记
+		for !IsEmpty() {      //判空
+			p := Pop()                            //出队
+			for _, v := range getNext(p.status) { //遍历可行状态
+				if deadMap[v] == false { //可行状态没走过
+					if v == target { //可解
+						return p.step + 1
+					}
+					Push(Pair{ //将可行状态入队
+						status: v,
+						step:   p.step + 1,
+					})
+					deadMap[v] = true //标记此状态走过了
 				}
-				queue = append(queue, pair{
-					status: v,
-					step:   p.step + 1,
-				})
-				deadMap[v] = true
 			}
 		}
+		return -1 //不可解
 	}
-	return -1
+	return bfs()
+}
+
+//获取此状态接下来能走的所有状态的列表
+func getNext(status string) (ret []string) {
+	s := []byte(status)
+	for i, v := range s {
+		s[i] = v - 1
+		if s[i] < '0' {
+			s[i] = '9'
+		}
+		ret = append(ret, string(s))
+		s[i] = v + 1
+		if s[i] > '9' {
+			s[i] = '0'
+		}
+		ret = append(ret, string(s))
+		s[i] = v //恢复原样
+	}
+	return
+}
+
+func Push(p Pair) {
+	queue = append(queue, p)
+}
+
+func Pop() Pair {
+	p := queue[0]
+	queue = queue[1:]
+	return p
+}
+
+func IsEmpty() bool {
+	return len(queue) == 0
 }
 
 //leetcode submit region end(Prohibit modification and deletion)
