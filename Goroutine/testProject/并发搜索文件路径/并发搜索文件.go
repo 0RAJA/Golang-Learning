@@ -63,7 +63,6 @@ func inputMessage() {
 	fmt.Println("输入搜索文件名")
 	name, _ = buf.ReadString('\n')
 	name = strings.TrimRight(name, "\n")
-
 }
 
 func toSearch() {

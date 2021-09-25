@@ -86,6 +86,9 @@ func search(tire *Trie, master bool) {
 func (this *Trie) Search(word string) (ret []string) {
 	nowWorker = 1
 	go func() {
+		defer func() {
+			downChan <- struct{}{} //结束任务
+		}()
 		root := this
 		for i := 0; i < len(word); i++ {
 			if root.suffix[word[i]] != nil {
@@ -95,7 +98,6 @@ func (this *Trie) Search(word string) (ret []string) {
 			}
 		}
 		search(root, false)
-		downChan <- struct{}{} //结束任务
 	}()
 	return searchCenter()
 }
