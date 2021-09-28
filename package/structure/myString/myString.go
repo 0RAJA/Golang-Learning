@@ -46,11 +46,6 @@ func GetNext2(s string) []int {
 		if j == 0 || s[i-1] == s[j-1] {
 			i++
 			j++
-			//if s[i-1] != s[j-1] {
-			//	next[i] = j
-			//} else {
-			//	next[i] = next[j]
-			//}
 			next[i] = j
 		} else {
 			j = next[j]
