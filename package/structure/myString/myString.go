@@ -5,15 +5,15 @@ func Kmp(s1, s2 string) int {
 	if len(s1) < len(s2) {
 		return -1
 	}
-	next := GetNext(s2)
-	for i, j := 1, 1; i <= len(s1); {
-		if j == 0 || s1[i-1] == s2[j-1] {
+	next := GetNext2(s2)
+	for i, j := 0, 0; i < len(s1); {
+		if j == -1 || s1[i] == s2[j] {
 			i++
 			j++
 		} else {
 			j = next[j]
 		}
-		if j > len(s2) {
+		if j == len(s2) {
 			return i - j
 		}
 	}
@@ -22,13 +22,13 @@ func Kmp(s1, s2 string) int {
 
 // GetNext 返回模板串s的next数组
 func GetNext(s string) []int {
-	next := make([]int, len(s)+1)
-	next[1] = 0
-	for i, j := 1, 0; i < len(s); {
-		if j == 0 || s[i-1] == s[j-1] {
+	next := make([]int, len(s))
+	next[0] = -1
+	for i, j := 0, -1; i < len(s)-1; {
+		if j == -1 || s[i] == s[j] {
 			i++
 			j++
-			if s[i-1] != s[j-1] {
+			if s[i] != s[j] {
 				next[i] = j
 			} else {
 				next[i] = next[j]
@@ -39,11 +39,12 @@ func GetNext(s string) []int {
 	}
 	return next
 }
+
 func GetNext2(s string) []int {
-	next := make([]int, len(s)+1)
-	next[1] = 0
-	for i, j := 1, 0; i < len(s); {
-		if j == 0 || s[i-1] == s[j-1] {
+	next := make([]int, len(s))
+	next[0] = -1
+	for i, j := 0, -1; i < len(s)-1; {
+		if j == -1 || s[i] == s[j] {
 			i++
 			j++
 			next[i] = j
