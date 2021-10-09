@@ -12,5 +12,6 @@ func TestKmp(t *testing.T) {
 }
 
 func Test_getNext(t *testing.T) {
-	fmt.Println(GetNext2("aabc"))
+	fmt.Println(GetNext2("abcaaaabca"))
+	fmt.Println(GetNext("abcaaaabca"))
 }

@@ -41,9 +41,9 @@ func GetNext(s string) []int {
 }
 
 func GetNext2(s string) []int {
-	next := make([]int, len(s))
+	next := make([]int, len(s)+1)
 	next[0] = -1
-	for i, j := 0, -1; i < len(s)-1; {
+	for i, j := 0, -1; i <= len(s)-1; {
 		if j == -1 || s[i] == s[j] {
 			i++
 			j++
