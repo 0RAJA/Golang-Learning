@@ -31,16 +31,24 @@
 
 package main
 
-func main() {
+import "fmt"
 
+func main() {
+	fmt.Println(arrangeCoins(1))
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
-func arrangeCoins(n int) (ret int) {
-	for ((1+ret)*ret)/2 < n {
-		ret++
+func arrangeCoins(n int) int {
+	left, right := 0, n+1
+	for left < right {
+		mid := left + (right-left)/2
+		if ((1+mid)*mid)/2 <= n {
+			left = mid + 1
+		} else {
+			right = mid
+		}
 	}
-	return ret - 1
+	return left - 1
 }
 
 //leetcode submit region end(Prohibit modification and deletion)
