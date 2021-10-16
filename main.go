@@ -1,17 +1,17 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-	"os"
-)
+import "fmt"
 
 func main() {
-	rb := bufio.NewReader(os.Stdin)
-	a, size, err := rb.ReadRune()
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(string(a), size)
+	func() {
+		defer func() {
+			if err := recover(); err != nil {
+				fmt.Println(err)
+			}
+		}()
+		defer fmt.Println("a")
+		defer fmt.Println("b")
+		panic("?")
+	}()
+	fmt.Println("b")
 }
