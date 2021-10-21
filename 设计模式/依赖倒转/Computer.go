@@ -19,6 +19,8 @@ import "fmt"
  2. 组装一台 Intel CPU Kingston内存 NVIDIA显卡的电脑，并运行
 */
 
+// --- 抽象层 ---
+
 type Card interface {
 	display()
 }
@@ -48,6 +50,8 @@ func (computer *Computer) DoWork() {
 	computer.memory.storage()
 	computer.card.display()
 }
+
+// --- 实现层 ---
 
 type IntelCard struct {
 	Card
@@ -108,4 +112,3 @@ func NewNvidiaCard() *NvidiaCard {
 func (this *NvidiaCard) display() {
 	fmt.Println("Nvidia Card...")
 }
-

@@ -2,6 +2,8 @@ package 依赖倒转
 
 import "fmt"
 
+//抽象层
+
 type Car interface {
 	Run()
 }
@@ -9,6 +11,8 @@ type Car interface {
 type Driver interface {
 	Drive(car Car)
 }
+
+// 实现层
 
 type BenZ struct {
 }
@@ -44,11 +48,4 @@ func NewPerson(name string) *Person {
 func (person *Person) Drive(car Car) {
 	fmt.Println("person ...", person.name)
 	car.Run()
-}
-
-func main() {
-	person1 := NewPerson("ZhangSan")
-	person1.Drive(NewBmw())
-	person2 := NewPerson("LiSi")
-	person2.Drive(NewBenZ())
 }
