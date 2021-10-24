@@ -3,15 +3,11 @@ package main
 import "fmt"
 
 func main() {
-	func() {
-		defer func() {
-			if err := recover(); err != nil {
-				fmt.Println(err)
-			}
-		}()
-		defer fmt.Println("a")
-		defer fmt.Println("b")
-		panic("?")
-	}()
-	fmt.Println("b")
+	nums := []int{1, 2, 3, 4}
+	fun := func(nums ...int) {
+		fmt.Println(nums)
+		nums[0] = 4
+	}
+	fun(nums[0:2]...)
+	fmt.Println(nums)
 }
