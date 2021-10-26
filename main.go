@@ -3,11 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	nums := []int{1, 2, 3, 4}
-	fun := func(nums ...int) {
-		fmt.Println(nums)
-		nums[0] = 4
+	i := 0
+	for i > 4 {
+		fmt.Println(2222)
+	} else {
+		fmt.Println(333)
 	}
-	fun(nums[0:2]...)
-	fmt.Println(nums)
 }
