@@ -1,12 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
 func main() {
-	i := 0
-	for i > 4 {
-		fmt.Println(2222)
-	} else {
-		fmt.Println(333)
-	}
+	mapA := make(map[int]int)
+	mapB := make(map[int]int)
+	mapA[1] = 1
+	mapA[2] = 1
+	mapA[3] = 1
+	mapB[1] = 1
+	mapB[2] = 1
+	mapB[3] = 1
+	fmt.Println(reflect.DeepEqual(mapA, mapB))
 }
