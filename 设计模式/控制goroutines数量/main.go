@@ -25,6 +25,7 @@ func Test1() {
 	}
 	wg.Wait()
 }
+
 func work2(task chan int, wg *sync.WaitGroup) {
 	for id := range task {
 		fmt.Println(id, runtime.NumGoroutine())
@@ -36,6 +37,7 @@ func work2(task chan int, wg *sync.WaitGroup) {
 func SendTask(id int, task chan int) {
 	task <- id
 }
+
 func Test2() {
 	wg := sync.WaitGroup{}
 	workers := 10
@@ -50,7 +52,8 @@ func Test2() {
 	}
 	wg.Wait()
 }
+
 func main() {
 	//Test1()
-	Test2()
+	//Test2()
 }
