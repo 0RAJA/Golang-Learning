@@ -1,9 +1,8 @@
 package main
 
-import (
-	"container/list"
-)
+import "fmt"
 
 func main() {
-	l := list.List{}
+	var A map[struct{}]struct{}
+	fmt.Println(A, A == nil)
 }
