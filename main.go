@@ -3,6 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	var A map[struct{}]struct{}
-	fmt.Println(A, A == nil)
+	var x []string
+	y := append(x, "123")
+	fmt.Println(y)
 }
