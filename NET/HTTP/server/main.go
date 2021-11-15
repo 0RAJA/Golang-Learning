@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 // HandConn 创建处理器函数
@@ -18,7 +19,7 @@ func main() {
 
 	//注册处理函数,用户连接,自动调用指定的处理函数
 	http.HandleFunc("/go", HandConn)
-
+	http.TimeoutHandler(http.DefaultServeMux, time.Second*2, "服务端操作超时")
 	//创建路由
 	http.ListenAndServe(":8000", nil)
 }
