@@ -111,7 +111,7 @@ func main() {
 		err = DB.QueryRow("SELECT tel,sal FROM person WHERE `name` = ?", name).Scan(&tel, &sal) //单条数据查询
 		fmt.Println(tel, sal)
 	}
-	if true { //准备查询--将占位符作为参数传入
+	if false { //准备查询--将占位符作为参数传入
 		stmt, err := DB.Prepare("SELECT `name` FROM person WHERE sal > ?")
 		if err != nil {
 			fmt.Println(err)
@@ -129,5 +129,56 @@ func main() {
 			fmt.Println(err)
 		}
 		rows.Close()
+	}
+	//事务
+	if true {
+		tx, err := DB.Begin()
+		if err != nil {
+			if tx != nil {
+				tx.Rollback()
+			}
+			fmt.Println("begin Err:", err)
+			return
+		}
+		id := "222"
+		sql1 := "UPDATE stu set name ='WW' where id = ?"
+		ret1, err := tx.Exec(sql1, id)
+		if err != nil {
+			tx.Rollback()
+			fmt.Println("sql1 Err:", err)
+			return
+		}
+		row1, err := ret1.RowsAffected()
+		if err != nil {
+			tx.Rollback()
+			fmt.Println("row1 Err:", err)
+			return
+		}
+		sql1 = "UPDATE stu set age = '30' where id = ?"
+		ret2, err := tx.Exec(sql1, id)
+		if err != nil {
+			tx.Rollback()
+			fmt.Println("sql2 Err", err)
+			return
+		}
+		row2, err := ret2.RowsAffected()
+		if err != nil {
+			tx.Rollback()
+			fmt.Println("row2 Err:", err)
+			return
+		}
+		if row2 == 1 && row1 == 1 {
+			err = tx.Commit()
+			if err != nil {
+				tx.Rollback()
+				fmt.Println("commit Err", err)
+				return
+			}
+			fmt.Println("Success")
+		} else {
+			tx.Rollback()
+			fmt.Println("row1,row2 Num Err")
+			return
+		}
 	}
 }
