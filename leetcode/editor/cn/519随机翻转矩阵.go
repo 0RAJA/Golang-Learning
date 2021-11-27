@@ -53,13 +53,13 @@ func main() {
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
-type Solution struct {
+type SolutionA struct {
 	sum, m, n int
 	hash      map[int]int
 }
 
-func Constructor(m int, n int) Solution {
-	return Solution{
+func ConstructorA(m int, n int) SolutionA {
+	return SolutionA{
 		sum:  m * n,
 		m:    m,
 		n:    n,
@@ -67,7 +67,7 @@ func Constructor(m int, n int) Solution {
 	}
 }
 
-func (this *Solution) Flip() []int {
+func (this *SolutionA) Flip() []int {
 	rand.Seed(time2.Now().UnixNano())
 	idx := rand.Intn(this.sum)
 	this.sum--
@@ -80,7 +80,7 @@ func (this *Solution) Flip() []int {
 	return []int{x, y}
 }
 
-func (this *Solution) Reset() {
+func (this *SolutionA) Reset() {
 	this.hash = make(map[int]int)
 	this.sum = this.m * this.n
 }
