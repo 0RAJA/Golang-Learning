@@ -185,8 +185,9 @@ type Closer interface {
 3.获取表单中提交的请求参数
 */
 func handler(w http.ResponseWriter, r *http.Request) {
+
 	//获取请求行中的信息
-	fmt.Fprintln(w, "你请求地址为:", r.URL.Path)
+	w.Write([]byte("你请求地址为:" + r.URL.Path))
 	fmt.Fprintln(w, "你请求地址后的查询字符串为:", r.URL.RawQuery)
 	/*
 		URL:http://localhost:8080/go?user=admin&pwd=123
@@ -235,5 +236,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/go", handler)
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
