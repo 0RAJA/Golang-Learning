@@ -49,6 +49,20 @@ func main() {
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
+/*
+高精度幂乘:
+2*1234 = (2*123)^10 * 2^4
+         ((2^12)^10 * 2^3)^10 * 2^4
+         (((2^1)^10 * 2^2)^10 * 2^3)^10) * 2^4
+a^[]nums = a^nums[length-1] * ((a^nums[:length-1])^10)
+快速幂:
+2^10 = 2^5 * 2^5
+2^11 = 2^5 * 2^5 *2
+a^b = a^(b/2) * a^(b/2) *a (如果b%2!=0)
+if b == 0{
+	return 1
+}
+*/
 func superPow(a int, b []int) int {
 	k := 1337
 	var myPow func(int, int) int
