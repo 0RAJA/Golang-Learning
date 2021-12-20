@@ -12,8 +12,9 @@ func main() {
 	//inorder := []int{9, 3, 15, 20, 7}
 	//buildTree(preorder, inorder)
 	//fmt.Println(isNumber("0.8"))
-	str := "1^1^1^"
-	fmt.Println(len(strings.Split(str, "^")))
+	//str := "1^1^1^"
+	//fmt.Println(len(strings.Split(str, "^")))
+	fmt.Println(fib(3))
 }
 
 func isDecimals(s string) bool {
@@ -80,4 +81,13 @@ func isNumber(s string) bool {
 		}
 	}
 	return false
+}
+
+func fib(n int) int {
+	nums := make([]int, 101)
+	nums[1], nums[2] = 1, 1
+	for i := 3; i <= 100; i++ {
+		nums[i] = (nums[i-1]+nums[i-2])%1e9 + 7
+	}
+	return nums[n]
 }
