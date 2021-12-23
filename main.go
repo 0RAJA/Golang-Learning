@@ -14,9 +14,23 @@ func main() {
 	//fmt.Println(isNumber("0.8"))
 	//str := "1^1^1^"
 	//fmt.Println(len(strings.Split(str, "^")))
-	fmt.Println(fib(3))
+	//fmt.Println(fib(3))
+	fmt.Println(translateNum(123454321))
 }
-
+func translateNum(num int) int {
+	s := strconv.Itoa(num)
+	a, b := 0, 1
+	for i := 0; i < len(s); i++ {
+		var c int
+		if i-1 >= 0 && s[i-1] > '0' && (s[i-1]-'0')*10+(s[i]-'0') <= 25 {
+			c = a + b
+		} else {
+			c = b
+		}
+		a, b = b, c
+	}
+	return b
+}
 func isDecimals(s string) bool {
 	if s == "" {
 		return false
