@@ -15,7 +15,30 @@ func main() {
 	//str := "1^1^1^"
 	//fmt.Println(len(strings.Split(str, "^")))
 	//fmt.Println(fib(3))
-	fmt.Println(translateNum(123454321))
+	//fmt.Println(translateNum(123454321))
+	fmt.Println(combinationSum([]int{2, 3, 6, 7}, 7))
+}
+
+func combinationSum(candidates []int, target int) (ret [][]int) {
+	result := make([]int, 0, 510)
+	var dfs func(target, idx int)
+	dfs = func(target, idx int) {
+		if idx == len(candidates) {
+			return
+		}
+		if target == 0 {
+			ret = append(ret, append([]int{}, result...))
+			return
+		}
+		dfs(target, idx+1)
+		if target-candidates[idx] >= 0 {
+			result = append(result, candidates[idx])
+			dfs(target-candidates[idx], idx)
+			result = result[:len(result)-1]
+		}
+	}
+	dfs(target, 0)
+	return
 }
 func translateNum(num int) int {
 	s := strconv.Itoa(num)
