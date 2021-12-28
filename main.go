@@ -1,8 +1,14 @@
 package main
 
 import (
+	"bufio"
+	"bytes"
+	"container/list"
 	"errors"
 	"fmt"
+	"io/ioutil"
+	"math"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -16,7 +22,105 @@ func main() {
 	//fmt.Println(len(strings.Split(str, "^")))
 	//fmt.Println(fib(3))
 	//fmt.Println(translateNum(123454321))
-	fmt.Println(combinationSum([]int{2, 3, 6, 7}, 7))
+	//fmt.Println(combinationSum([]int{2, 3, 6, 7}, 7))
+	//testAppend1()
+	//testAppend2()
+	//testJson()
+	//testInput()
+	testW()
+}
+
+func testW() {
+	//var x byte
+	//nums := []byte{1, 0, 1, 1}
+	//for i, v := range nums {
+	//	if v == 1 {
+	//		x = x | (1 << i)
+	//	}
+	//}
+	////x = x | (1 << 1)
+	////x = x & (^(1 << 0))
+	//fmt.Println(x)
+	//f, _ := os.OpenFile("D:\\桌面\\数据结构\\PTA\\huffmanTree\\1.txt", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0777)
+	//defer f.Close()
+	//for i := 0; i < 1500; i++ {
+	//	f.Write([]byte("TEST"))
+	//}
+	//testCode()
+	testSearch()
+}
+func testSearch() {
+	nums := []int{0, 1, 2, 3, 4, 4, 5, 6, 7, 8}
+	search := func(n int, f func(idx int) bool) int {
+		l, r := 0, n
+		for l < r {
+			mid := l + (r-l)/2
+			if !f(mid) {
+				l = mid + 1
+			} else {
+				r = mid
+			}
+		}
+		return l
+	}
+	idx := search(len(nums), func(idx int) bool { return nums[idx] > 9 })
+	fmt.Println(idx)
+}
+
+func testInput() {
+	str, err := bufio.NewReader(os.Stdin).ReadString('\n')
+	if err != nil {
+		fmt.Println(err)
+	}
+	str = strings.Replace(str, "\r\n", "", -1)
+	str = strings.Replace(str, "\\", "/", -1)
+	fmt.Println(str)
+}
+
+func testCode() {
+	file, _ := os.Open("D:/桌面/1.txt")
+	all, _ := ioutil.ReadAll(file)
+	bf := bufio.NewReaderSize(bytes.NewReader(all), 50000)
+	bf.ReadByte()
+	data := make([]byte, 50000)
+	cnt, _ := bf.Read(data)
+	fmt.Println(string(data[:cnt]))
+}
+
+func testAppend1() {
+	nums := []int{1, 2, 3}
+	ret := [][]int{}
+	ret = append(ret, append([]int{}, nums...))
+	nums[0] = 3
+	fmt.Println(ret)
+}
+
+func testAppend2() {
+	nums := []int{1, 2, 3}
+	ret := [][]int{}
+	ret = append(ret, nums)
+	nums[0] = 3
+	fmt.Println(ret)
+}
+
+func getDistances(arr []int) (res []int64) {
+	res = make([]int64, len(arr))
+	rets := make(map[int]*list.List, len(arr))
+	for i, v := range arr {
+		if rets[v] == nil {
+			rets[v] = list.New()
+		}
+		rets[v].PushFront(i)
+	}
+	for i, v := range arr {
+		for e := rets[v].Front(); e != nil; e = e.Next() {
+			t := int64(math.Abs(float64(i - e.Value.(int))))
+			res[i] += t
+			res[e.Value.(int)] += t
+		}
+		rets[v].Remove(rets[v].Back())
+	}
+	return
 }
 
 func combinationSum(candidates []int, target int) (ret [][]int) {
