@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"math"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -27,28 +28,24 @@ func main() {
 	//testAppend2()
 	//testJson()
 	//testInput()
-	testW()
+	//testSearch()
+	//testW()
+	TestSearch()
+}
+
+func TestSearch() {
+	nums := []int{1, 2, 3, 4}
+	fmt.Println(sort.SearchInts(nums, 5))
 }
 
 func testW() {
-	//var x byte
-	//nums := []byte{1, 0, 1, 1}
-	//for i, v := range nums {
-	//	if v == 1 {
-	//		x = x | (1 << i)
-	//	}
-	//}
-	////x = x | (1 << 1)
-	////x = x & (^(1 << 0))
-	//fmt.Println(x)
-	//f, _ := os.OpenFile("D:\\桌面\\数据结构\\PTA\\huffmanTree\\1.txt", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0777)
-	//defer f.Close()
-	//for i := 0; i < 1500; i++ {
-	//	f.Write([]byte("TEST"))
-	//}
-	//testCode()
-	testSearch()
+	f, _ := os.OpenFile("D:\\桌面\\1.txt", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0777)
+	defer f.Close()
+	for i := 0; i < 25000; i++ {
+		f.Write([]byte("A"))
+	}
 }
+
 func testSearch() {
 	nums := []int{0, 1, 2, 3, 4, 4, 5, 6, 7, 8}
 	search := func(n int, f func(idx int) bool) int {

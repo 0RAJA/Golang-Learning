@@ -42,11 +42,13 @@ type Test struct {
 func (t *Test) Push(x interface{}) {
 	t.IntSlice = append(t.IntSlice, x.(int))
 }
+
 func (t *Test) Pop() interface{} {
 	p := t.IntSlice[len(t.IntSlice)-1]
 	t.IntSlice = t.IntSlice[:len(t.IntSlice)-1]
 	return p
 }
+
 func (t *Test) Less(i, j int) bool { return t.IntSlice[i] < t.IntSlice[j] }
 
 func getLeastNumbers(arr []int, k int) (ret []int) {
