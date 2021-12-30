@@ -29,8 +29,8 @@ func main() {
 	//testJson()
 	//testInput()
 	//testSearch()
-	//testW()
-	TestSearch()
+	testW()
+	//TestSearch()
 }
 
 func TestSearch() {
@@ -39,7 +39,7 @@ func TestSearch() {
 }
 
 func testW() {
-	f, _ := os.OpenFile("D:\\桌面\\1.txt", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0777)
+	f, _ := os.OpenFile("D:\\桌面\\2.txt", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0777)
 	defer f.Close()
 	for i := 0; i < 25000; i++ {
 		f.Write([]byte("A"))
