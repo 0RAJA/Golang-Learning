@@ -57,12 +57,38 @@ func jump(nums []int) (cnt int) {
 	step := 0
 	for i := 0; i < len(nums)-1; i++ {
 		maxPoint = max(maxPoint, i+nums[i]) //找到当前路过点能到达的最大位置
-		if i == end { //到达当前的目的地后,将之前走过的点能到达的最大位置更新为新的目的地(如果没到达新的目的地就到最后一个格子了说明能够通过上一次直接到),且更新下step+1(最开始目的地为0)
+		if i == end {                       //到达当前的目的地后,将之前走过的点能到达的最大位置更新为新的目的地(如果没到达新的目的地就到最后一个格子了说明能够通过上一次直接到),且更新下step+1(最开始目的地为0)
 			end = maxPoint
 			step++
 		}
 	}
 	return step
+}
+
+//贪心
+func jump2(nums []int) (ret int) {
+	n := len(nums) - 1
+	idx := 0
+	search := func(idx int) (res int) {
+		max := 0
+		k := nums[idx]
+		for i := 1; i <= k; i++ {
+			point := idx + i
+			if point == n {
+				return point
+			}
+			if m := point + nums[point]; m > max {
+				max = m
+				res = point
+			}
+		}
+		return
+	}
+	for idx != n {
+		idx = search(idx)
+		ret++
+	}
+	return
 }
 
 //leetcode submit region end(Prohibit modification and deletion)

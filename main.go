@@ -29,10 +29,30 @@ func main() {
 	//testJson()
 	//testInput()
 	//testSearch()
-	testW()
+	//testW()
 	//TestSearch()
+	fmt.Println(TestlargestNumber([]int{0, 0}))
 }
 
+func TestlargestNumber(nums []int) (ret string) {
+	sort.Slice(nums, func(i, j int) bool {
+		a := strconv.Itoa(nums[i])
+		b := strconv.Itoa(nums[j])
+		return a+b > b+a
+	})
+	for i := range nums {
+		s := strconv.Itoa(nums[i])
+		ret += s
+	}
+	for i := 0; i < len(ret); i++ {
+		if i != len(ret)-1 && ret[i] == '0' {
+			continue
+		} else {
+			return ret[i:]
+		}
+	}
+	return
+}
 func TestSearch() {
 	nums := []int{1, 2, 3, 4}
 	fmt.Println(sort.SearchInts(nums, 5))
