@@ -9,9 +9,11 @@ import (
 	"io/ioutil"
 	"math"
 	"os"
+	"reflect"
 	"sort"
 	"strconv"
 	"strings"
+	"unsafe"
 )
 
 func main() {
@@ -31,9 +33,59 @@ func main() {
 	//testSearch()
 	//testW()
 	//TestSearch()
-	fmt.Println(TestlargestNumber([]int{0, 0}))
+	//fmt.Println(TestlargestNumber([]int{0, 0}))
+	//TestByteToString()
+	constructArr([]int{1, 2, 3, 4, 5})
 }
 
+func constructArr(a []int) (ret []int) {
+	pro := make([]int, len(a))
+	back := make([]int, len(a))
+	ret = make([]int, len(a))
+	for i := 0; i < len(a); i++ {
+		if i == 0 {
+			pro[i] = a[i]
+		} else {
+			pro[i] = pro[i-1] * a[i]
+		}
+	}
+	for i := len(a) - 1; i >= 0; i-- {
+		if i == len(a)-1 {
+			back[i] = a[i]
+		} else {
+			back[i] = back[i+1] * a[i]
+		}
+	}
+	for i := 0; i < len(a); i++ {
+		if i == 0 {
+			ret[i] = back[i+1]
+		} else if i == len(a)-1 {
+			ret[i] = pro[i-1]
+		} else {
+			ret[i] = pro[i-1] * back[i+1]
+		}
+	}
+	return
+}
+
+// TestByteToString 测试[]byte和string的相互转换
+func TestByteToString() {
+	bts := []byte{'h', 'e', 'l', 'l', 'o'}
+	str := "hello"
+	//普通转换
+	fmt.Println(string(bts), str)
+	//reflect和unsafe
+	//string -> []byte
+	sh := (*reflect.StringHeader)(unsafe.Pointer(&str))
+	bh := reflect.SliceHeader{
+		Data: sh.Data,
+		Len:  sh.Len,
+		Cap:  sh.Len,
+	}
+	fmt.Println(*((*[]byte)(unsafe.Pointer(&bh))))
+	//[]byte -> string
+	fmt.Println(*(*string)(unsafe.Pointer(&bts)))
+}
 func TestlargestNumber(nums []int) (ret string) {
 	sort.Slice(nums, func(i, j int) bool {
 		a := strconv.Itoa(nums[i])
