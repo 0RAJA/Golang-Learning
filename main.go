@@ -35,7 +35,16 @@ func main() {
 	//TestSearch()
 	//fmt.Println(TestlargestNumber([]int{0, 0}))
 	//TestByteToString()
-	constructArr([]int{1, 2, 3, 4, 5})
+	//constructArr([]int{1, 2, 3, 4, 5})
+	TestSplit()
+}
+
+func TestSplit() {
+	str := "a/b/c/.."
+	for _, v := range strings.Split(str, "/") {
+		fmt.Println(v)
+	}
+	fmt.Println("*")
 }
 
 func constructArr(a []int) (ret []int) {
