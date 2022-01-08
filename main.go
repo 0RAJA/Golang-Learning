@@ -36,9 +36,14 @@ func main() {
 	//fmt.Println(TestlargestNumber([]int{0, 0}))
 	//TestByteToString()
 	//constructArr([]int{1, 2, 3, 4, 5})
-	TestSplit()
+	//TestSplit()
+	testList()
 }
-
+func testList() {
+	var l list.List
+	l.PushFront(1)
+	fmt.Println(l.Len())
+}
 func TestSplit() {
 	str := "a/b/c/.."
 	for _, v := range strings.Split(str, "/") {

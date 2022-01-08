@@ -7,7 +7,7 @@
 <p><strong>示例：</strong></p>
 
 <pre>
-给定一个链表: <strong>1->2->3->4->5</strong>, 和 <em>k </em><strong>= 2</strong>.
+给定一个链表: <strong>1->2->3->4->5</strong>, 和 <em>K </em><strong>= 2</strong>.
 
 返回链表 4<strong>->5</strong>.</pre>
 <div><div>Related Topics</div><div><li>链表</li><li>双指针</li></div></div><br><div><li>👍 229</li><li>👎 0</li></div>

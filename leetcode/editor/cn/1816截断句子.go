@@ -4,13 +4,13 @@
 // 例如，"Hello World"、"HELLO" 和 "hello world hello world" 都是句子。
 //
 //
-// 给你一个句子 s 和一个整数 k ，请你将 s 截断 ，使截断后的句子仅含 前 k 个单词。返回 截断 s 后得到的句子。
+// 给你一个句子 s 和一个整数 K ，请你将 s 截断 ，使截断后的句子仅含 前 K 个单词。返回 截断 s 后得到的句子。
 //
 //
 //
 // 示例 1：
 //
-// 输入：s = "Hello how are you Contestant", k = 4
+// 输入：s = "Hello how are you Contestant", K = 4
 //输出："Hello how are you"
 //解释：
 //s 中的单词为 ["Hello", "how" "are", "you", "Contestant"]
@@ -20,7 +20,7 @@
 //
 // 示例 2：
 //
-// 输入：s = "What is the solution to this problem", k = 4
+// 输入：s = "What is the solution to this problem", K = 4
 //输出："What is the solution"
 //解释：
 //s 中的单词为 ["What", "is" "the", "solution", "to", "this", "problem"]
@@ -29,7 +29,7 @@
 //
 // 示例 3：
 //
-// 输入：s = "chopper is not a tanuki", k = 5
+// 输入：s = "chopper is not a tanuki", K = 5
 //输出："chopper is not a tanuki"
 //
 //
@@ -39,7 +39,7 @@
 //
 //
 // 1 <= s.length <= 500
-// k 的取值范围是 [1, s 中单词的数目]
+// K 的取值范围是 [1, s 中单词的数目]
 // s 仅由大小写英文字母和空格组成
 // s 中的单词之间由单个空格隔开
 // 不存在前导或尾随空格
