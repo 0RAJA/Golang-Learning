@@ -31,9 +31,7 @@ package main
 import "fmt"
 
 func main() {
-	for i := 1; i <= 15; i++ {
-		fmt.Println(findNthDigit(i))
-	}
+	fmt.Println(findNthDigit2(11))
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
@@ -64,6 +62,26 @@ func findNthDigit(n int) (ret int) {
 	m = m/9 + pos          //通过偏移量找到这个数
 	n -= index * pos       //计算在这个数的第几位
 	for i := 0; i <= index-n; i++ {
+		ret = m % 10
+		m /= 10
+	}
+	return
+}
+func findNthDigit2(n int) (ret int) {
+	idx := 1
+	m := 9
+	for idx <= 10 {
+		if idx*m >= n {
+			break
+		}
+		n -= idx * m
+		idx++
+		m *= 10
+	}
+	pos := (n - 1) / idx //计算相对此区间第一个数的偏移量
+	m = m/9 + pos        //通过偏移量找到这个数
+	n -= idx * pos       //计算在这个数的第几位
+	for i := 0; i <= idx-n; i++ {
 		ret = m % 10
 		m /= 10
 	}
