@@ -13,6 +13,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 	"unsafe"
 )
 
@@ -37,13 +38,53 @@ func main() {
 	//TestByteToString()
 	//constructArr([]int{1, 2, 3, 4, 5})
 	//TestSplit()
-	testList()
+	//testList()
+	// TestDiff()
+	//TestRace()
+	TestEqual()
 }
+
+func TestEqual() {
+	a := struct {
+		m, n int
+	}{m: 1, n: 2}
+	b := struct {
+		m, n int
+	}{m: 1, n: 2}
+	fmt.Println(a == b)
+	c := make(chan int, 1)
+	c <- 1
+	d := make(chan int, 1)
+	d <- 1
+	fmt.Println(c == d)
+	e := map[int]int{}
+	f := map[int]int{}
+	fmt.Printf("%p %p", e, f)
+}
+
+func TestRace() {
+	a := 1
+	go func() {
+		a = 2
+	}()
+	a = 3
+	fmt.Println("a is ", a)
+
+	time.Sleep(time.Second * 2)
+}
+
+func TestDiff() {
+	a := 1
+	b := 2
+	fmt.Println(a | b)
+}
+
 func testList() {
 	var l list.List
 	l.PushFront(1)
 	fmt.Println(l.Len())
 }
+
 func TestSplit() {
 	str := "a/b/c/.."
 	for _, v := range strings.Split(str, "/") {
