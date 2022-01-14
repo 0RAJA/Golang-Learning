@@ -12,7 +12,6 @@ func HandConn(w http.ResponseWriter, req *http.Request) {
 	fmt.Println(req.URL)    // URL在服务端表示被请求的URI，在客户端表示要访问的URL
 	fmt.Println(req.Header) //Header字段用来表示HTTP请求的头域。
 	fmt.Println(req.Body)   //Body是请求的主体。
-	req.FormValue()
 	w.Write([]byte("hello go"))
 }
 

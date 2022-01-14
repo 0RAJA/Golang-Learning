@@ -94,7 +94,7 @@ func main() {
 		fmt.Println("数据库连接失败,err = ", err)
 		return
 	}
-	lister, err := net.Listen("tcp", "127.0.0.1:8000") //监听此端口
+	lister, err := net.Listen("tcp", ":8000") //监听此端口
 	if err != nil {
 		fmt.Println(err)
 		return

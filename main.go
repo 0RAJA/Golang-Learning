@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"math"
+	"net"
 	"os"
 	"reflect"
 	"sort"
@@ -41,7 +42,27 @@ func main() {
 	//testList()
 	// TestDiff()
 	//TestRace()
-	TestEqual()
+	//TestEqual()
+	TestTcp()
+}
+
+func TestTcp() {
+	lister, err := net.Listen("tcp", ":80")
+	if err != nil {
+		panic(err)
+	}
+	defer lister.Close()
+	conn, err := lister.Accept()
+	if err != nil {
+		return
+	}
+	data := make([]byte, 100)
+	n, err := conn.Read(data)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(data[:n])
 }
 
 func TestEqual() {
