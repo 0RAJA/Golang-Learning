@@ -1,0 +1,10 @@
+<!ELEMENT students (student*)>
+        <!--根标签students 里面有子标签student 可以出现*次-->
+        <!ELEMENT student (name,age,sex)>
+        <!--标签student 有子标签name,age,sex可以出现1次-->
+        <!ELEMENT name (#PCDATA)>
+        <!ELEMENT age (#PCDATA)>
+        <!ELEMENT sex (#PCDATA)>
+        <!--以上内容代表格式为字符串-->
+        <!ATTLIST student number ID #REQUIRED>
+        <!--设置属性:student有number属性,类型为ID:唯一,REQUIRED:必须出现-->
