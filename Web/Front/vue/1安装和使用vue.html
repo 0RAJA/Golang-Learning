@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+    <!-- 声明式渲染 -->
+    <!-- 文本插值 -->
+    <div id="app">
+        {{ message }}
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!'
+            }
+        })
+    </script>
+    <!-- 绑定元素属性 -->
+    <div id="app_2">
+        <span v-bind:title="messages">
+            鼠标悬停后查看动态绑定的信息
+        </span>
+    </div>
+    <script>
+        var app2 = new Vue({
+            el: '#app_2',
+            data: {
+                messages: '页面加载于 ' + new Date().toLocaleString()
+            }
+        })
+    </script>
+    <!-- 条件与循环 -->
+    <div id="app_3">
+        <p v-if="seen">可以看到我</p>
+    </div>
+    <script>
+        var app3 = new Vue({
+            el: '#app_3',
+            data: {
+                seen: false
+            }
+        })
+    </script>
+    <div id="app_4">
+        <ol>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+        </ol>
+    </div>
+    <!-- 列表 -->
+    <script>
+        var app4 = new Vue({
+            el: '#app_4',
+            data: {
+                todos: [{
+                        text: '学习 JavaScript'
+                    },
+                    {
+                        text: '学习 Vue'
+                    },
+                    {
+                        text: '整个牛项目'
+                    },
+                    {
+                        text: '学习 Webpack'
+                    }
+                ]
+            }
+        })
+    </script>
+    <!-- 处理用户输入 -->
+    <div id="app_5">
+        <p>{{message}}</p>
+        <button v-on:click="reverseMessage">翻转消息</button>
+    </div>
+    <script>
+        var app5 = new Vue({
+            el: '#app_5',
+            data: {
+                message: 'Hello Vue.js!'
+            },
+            methods: {
+                reverseMessage: function () {
+                    this.message = this.message.split('').reverse().join('')
+                }
+            }
+        })
+    </script>
+    <!-- 表单输入和应用状态之间的双向绑定 -->
+    <div id="app_6">
+        <p>{{message}}</p>
+        <input v-model="message">
+    </div>
+    <script>
+        var app6 = new Vue({
+            el: '#app_6',
+            data: {
+                message: 'hello Vue'
+            }
+        })
+    </script>
+</body>
+
+</html>
