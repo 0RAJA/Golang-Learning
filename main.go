@@ -49,10 +49,8 @@ func main() {
 }
 
 func TestRand() {
-	random := rand.NewSource(time.Now().UnixNano())
-	for i := 0; i < 10; i++ {
-		fmt.Println(random.Int63() % 100)
-	}
+	random := rand.NewSource(10)
+	fmt.Println(random.Int63())
 }
 
 func TestTcp() {
