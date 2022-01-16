@@ -61,15 +61,12 @@ func (this *Solution) Reset() []int {
 	return this.original
 }
 
-func (this *Solution) Shuffle() (ret []int) {
-	ret = make([]int, len(this.original))
-	for i := range ret {
-		j := rand.Intn(len(this.nums))
-		ret[i] = this.nums[j]
-		this.nums = append(this.nums[:j], this.nums[j+1:]...)
+func (this *Solution) Shuffle() []int {
+	for i := range this.nums {
+		j := rand.Intn(len(this.nums)-i) + i
+		this.nums[i], this.nums[j] = this.nums[j], this.nums[i]
 	}
-	this.nums = ret
-	return
+	return this.nums
 }
 
 /**

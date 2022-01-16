@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"math"
+	"math/rand"
 	"net"
 	"os"
 	"reflect"
@@ -43,7 +44,15 @@ func main() {
 	// TestDiff()
 	//TestRace()
 	//TestEqual()
-	TestTcp()
+	//TestTcp()
+	TestRand()
+}
+
+func TestRand() {
+	random := rand.NewSource(time.Now().UnixNano())
+	for i := 0; i < 10; i++ {
+		fmt.Println(random.Int63() % 100)
+	}
 }
 
 func TestTcp() {
