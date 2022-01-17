@@ -45,7 +45,21 @@ func main() {
 	//TestRace()
 	//TestEqual()
 	//TestTcp()
-	TestRand()
+	//TestRand()
+	TestSelect()
+}
+
+func TestSelect() {
+	x := make(chan int, 1)
+	go func() {
+		select {
+		case <-x:
+		case <-time.NewTimer(2 * time.Second).C:
+		}
+		fmt.Println("ok")
+		x <- 1
+	}()
+	<-x
 }
 
 func TestRand() {
