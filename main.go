@@ -4,9 +4,12 @@ import (
 	"bufio"
 	"bytes"
 	"container/list"
+	"encoding/binary"
 	"errors"
+	"flag"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"math"
 	"math/rand"
 	"net"
@@ -46,7 +49,50 @@ func main() {
 	//TestEqual()
 	//TestTcp()
 	//TestRand()
-	TestSelect()
+	//TestSelect()
+	//TestJson()
+	//TestSize()
+	//TestBinary()
+	//TestBuffer()
+	TestSub()
+}
+
+func TestSub() {
+	t1, _ := time.Parse("15:04", "23:59")
+	t2, _ := time.Parse("15:04", "00:00")
+	fmt.Println(t2.Sub(t1).Minutes())
+}
+
+func TestBuffer() {
+	buff := bytes.NewBuffer([]byte{})
+	buff.Write([]byte("123"))
+	fmt.Println(buff.Bytes())
+}
+
+func TestBinary() {
+	nums := make([]byte, 10)
+	fmt.Println(binary.PutVarint(nums, 1))
+	fmt.Println(binary.Varint(nums))
+	//binary.Read()
+}
+
+func TestSize() {
+	//num := int64(1)
+	//num2 := int32(1)
+	nums := []int{21, 3, 4}
+	fmt.Println(unsafe.Sizeof(nums))
+}
+
+func TestJson() {
+	var path = "test"
+	flag.StringVar(&path, "path", "", "路径")
+	flag.Parse()
+	fmt.Println(path)
+	data, err := os.ReadFile(path)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	fmt.Println(string(data))
 }
 
 func TestSelect() {
