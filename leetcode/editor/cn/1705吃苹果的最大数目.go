@@ -50,41 +50,48 @@ import (
 )
 
 func main() {
-	apples := []int{3, 0, 0, 0, 0, 2}
-	days := []int{3, 0, 0, 0, 0, 2}
+	/*
+		[1,2,3,5,2]
+		[3,2,1,4,2]
+	*/
+	apples := []int{1, 2, 3, 5, 2}
+	days := []int{3, 2, 1, 4, 2}
 	fmt.Println(eatenApples(apples, days))
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
 func eatenApples(apples, days []int) (ans int) {
-	h := hp{}
-	i := 0
-	for ; i < len(apples); i++ {
-		for len(h) > 0 && h[0].end <= i { //把所有过期的苹果pop
-			heap.Pop(&h)
-		}
+	hp := hp{}
+	for i := range apples {
 		if apples[i] > 0 {
-			heap.Push(&h, pair{i + days[i], apples[i]})
+			heap.Push(&hp, pair{
+				end:  i + days[i],
+				left: apples[i],
+			})
 		}
-		if len(h) > 0 { //可以吃的苹果
-			h[0].left--
-			if h[0].left == 0 {
-				heap.Pop(&h)
+		for hp.Len() > 0 && hp[0].end <= i {
+			heap.Pop(&hp)
+		}
+		if hp.Len() > 0 {
+			hp[0].left--
+			if hp[0].left == 0 {
+				heap.Pop(&hp)
 			}
 			ans++
 		}
 	}
-	for len(h) > 0 {
-		for len(h) > 0 && h[0].end <= i {
-			heap.Pop(&h)
+	day := len(apples)
+	for hp.Len() > 0 {
+		if hp[0].end <= day {
+			heap.Pop(&hp)
+		} else {
+			hp[0].left--
+			if hp[0].left == 0 {
+				heap.Pop(&hp)
+			}
+			ans++
+			day++
 		}
-		if len(h) == 0 {
-			break
-		}
-		p := heap.Pop(&h).(pair)
-		num := min(p.end-i, p.left)
-		ans += num
-		i += num
 	}
 	return
 }
@@ -97,12 +104,5 @@ func (h hp) Less(i, j int) bool  { return h[i].end < h[j].end }
 func (h hp) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
 func (h *hp) Push(v interface{}) { *h = append(*h, v.(pair)) }
 func (h *hp) Pop() interface{}   { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
-
-func min(a, b int) int {
-	if a > b {
-		return b
-	}
-	return a
-}
 
 //leetcode submit region end(Prohibit modification and deletion)

@@ -48,37 +48,33 @@
 package main
 
 import (
+	"fmt"
 	"math"
 	"sort"
 )
 
 func main() {
-
+	fmt.Println(largestSumAfterKNegations([]int{2, -3, -1, 5, -4}, 2))
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
-func largestSumAfterKNegations(nums []int, k int) (ret int) {
-	abs := func(a int) int {
-		if a > 0 {
-			return a
-		}
-		return -a
-	}
+func largestSumAfterKNegations(nums []int, k int) (sum int) {
+	min := math.MaxInt32
 	sort.Ints(nums)
-	cnt := math.MaxInt32
 	for i := range nums {
-		if nums[i] < 0 && k > 0 {
-			ret -= nums[i]
+		if k > 0 && nums[i] < 0 {
+			nums[i] = -nums[i]
 			k--
-		} else {
-			ret += nums[i]
 		}
-		if x := abs(nums[i]); x < cnt {
-			cnt = x
+		if nums[i] < min {
+			min = nums[i]
 		}
+		sum += nums[i]
 	}
-	if k%2 != 0 {
-		ret -= 2 * cnt
+	if k == 0 || k%2 == 0 {
+		return sum
+	} else {
+		sum -= min * 2
 	}
 	return
 }
