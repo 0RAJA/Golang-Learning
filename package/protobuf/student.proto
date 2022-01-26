@@ -1,0 +1,15 @@
+syntax = "proto3"; //标注版本
+
+package main; //即包名声明符是可选的，用来防止不同的消息类型有命名冲突。
+
+option go_package = ".";
+
+message Student{
+  string name = 1; //等号后的数字表示标识符,每个字段需要一个标识符
+  bool male = 2;
+  repeated int32 scores = 3; //repeated 表示可重复,数组类型
+}
+
+/*
+protoc --go_out=. *.proto
+*/
