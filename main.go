@@ -54,7 +54,12 @@ func main() {
 	//TestSize()
 	//TestBinary()
 	//TestBuffer()
-	TestSub()
+	//TestSub()
+	testMain()
+}
+
+func testMain() {
+	fmt.Println("hello world")
 }
 
 func TestSub() {
